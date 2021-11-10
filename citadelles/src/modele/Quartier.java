@@ -9,7 +9,14 @@ public class Quartier {
 	
 	
 	//Constructeurs
-	Quartier(String nom, String type, int cout, String caracteristiques){
+	
+	public Quartier(String nom, String type, int cout){
+		this.nom=nom;
+		this.type=type;
+		this.coutConstruction=cout;
+		this.caracteristiques="";
+	}
+	public Quartier(String nom, String type, int cout, String caracteristiques){
 		this.nom=nom;
 		this.type=type;
 		this.coutConstruction=cout;
@@ -35,27 +42,31 @@ public class Quartier {
 	 public String getType() {
 		 return this.type;
 	 }
-	 public void setType(int type) {
-		 if(TYPE_QUARTIERS.length<= type){
-			 this.type=TYPE_QUARTIERS[type];
-			 
-		 }else {
-			 this.type="";
+	 
+	 public void setType(String type) {
+		 for(int i=0; i< TYPE_QUARTIERS.length; i++) {  //Boucle qui nous permets de parcourir chaque élément du tableau TYPES_QUARTIERS
+			 if(TYPE_QUARTIERS[i]==type) {
+				 this.type=type;
+			 }else {
+				 this.type="";
+			 }
 		 }
 	 }
+
 	//Accesseurs CoutConstruction
 	public int getCout() {
 		return this.coutConstruction;
 	}
+	
 	public void setCout(int cout) {
-		if(this.coutConstruction<=6 && this.coutConstruction>=1) {
+		if(cout<=6 && cout>=1) {
 			this.coutConstruction=cout;
 		}else {
 			this.coutConstruction=0;
 		}
 	}
 	
-	//Accesseurs Caract�ristiques
+	//Accesseurs Caractéristiques
 	
 	public String getCaracteristiques() {
 		return this.caracteristiques;
