@@ -79,7 +79,39 @@ public class Joueur {
 			this.tresor-=gold;
 		}
 	}
-
+	
+	public void ajouterQuartierDansCite(Quartier quartier) {
+		if(nbQuartiers<8) {
+			this.cite[nbQuartiers]=quartier;
+			nbQuartiers++;
+		}
+	}
+	
+	public boolean quartierPresentDansCite(String nom) {
+		int i=0;
+		boolean retour=false;
+		while(this.cite[i]!=null) {
+			if(nom==this.cite[i].getNom()) {
+				retour=true;
+			}
+			i++;
+		}
+		return retour;
+	}
+	
+	public Quartier retirerQuartierDansCite(String nom) {
+		int i=0;
+		Quartier efface=null;
+		while(this.cite[i]!=null) {
+			if(nom==this.cite[i].getNom()) {
+				efface=this.cite[i];
+				this.cite[i]=null;
+				nbQuartiers--;
+			}
+			i++;
+		}
+		return efface;
+	}
 	
 	
 	
