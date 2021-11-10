@@ -14,7 +14,7 @@ public class Joueur {
 	
 	//Constructeur
 	public Joueur(String nom){
-		this.setNom(nom); //probablement à changer en mode : this.nom=nom;
+		this.setNom(nom); //probablement Ã  changer en mode : this.nom=nom;
 		this.tresor=0;
 		this.nbQuartiers=0;
 		this.possedeCouronne=false;
@@ -41,7 +41,7 @@ public class Joueur {
 	public int nbQuartiersDansCite() {
 		return this.nbQuartiers;
 	}
-	//Accesseurs cité
+	//Accesseurs citÃ©
 	public Quartier[] getCite() {
 		return this.cite;
 	}
@@ -54,10 +54,32 @@ public class Joueur {
 	//Accesseur de nbQuartierDansMain
 	public int nbQuartiersDansMain() {
 		//for(int i=0; i<this.main.size();i++)
-			// peut etre simplement return la taile de main si ce dernier est une list évolutif à revoir avant de se compliquer la tache
-		return this.main.size() ; // après vérification il semble que cela soit fonctionnel.
+			// peut etre simplement return la taile de main si ce dernier est une list Ã©volutif Ã  revoir avant de se compliquer la tache
+		return this.main.size() ; // aprÃ¨s vÃ©rification il semble que cela soit fonctionnel.
 	}
 	
+	//Accesseur de Possede couronne
+	public boolean getPossedeCouronne() {
+		return this.possedeCouronne;
+	}
+	public void setPossedeCouronne(boolean b) {
+		this.possedeCouronne=b;
+	}
+	
+	//MÃ©thodes
+	
+	public void ajouterPieces(int gold) {
+		if(gold>0) {
+			this.tresor+=gold;
+		}
+	}
+	
+	public void retirerPieces(int gold) {
+		if(gold<=this.tresor && gold >0) {
+			this.tresor-=gold;
+		}
+	}
+
 	
 	
 	
