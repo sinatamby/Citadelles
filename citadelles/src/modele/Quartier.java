@@ -11,23 +11,22 @@ public class Quartier {
 	//Constructeurs
 	
 	public Quartier(String nom, String type, int cout){
-		this.nom=nom;
-		this.type=type;
-		this.coutConstruction=cout;
-		this.caracteristiques="";
+		this.setNom(nom);
+		this.setType(type);
+		this.setCout(cout);
+		this.setCaracteristiques("");
 	}
 	public Quartier(String nom, String type, int cout, String caracteristiques){
-		this.nom=nom;
-		this.type=type;
-		this.coutConstruction=cout;
-		this.caracteristiques=caracteristiques;
+		this.setNom(nom);
+		this.setType(type);
+		this.setCout(cout);
+		this.setCaracteristiques(caracteristiques);
 	}
 	public Quartier(){
-		this.nom="";
-		this.type="";
-		this.coutConstruction=0;
-		this.caracteristiques="";
-		
+		this.setNom("");
+		this.setType("");
+		this.setCout(0);
+		this.setCaracteristiques("");		
 	}
 	
 	//Accesseurs Nom
@@ -44,15 +43,29 @@ public class Quartier {
 	 }
 	 
 	 public void setType(String type) {
+		 /*boolean correct = false ;
 		 for(int i=0; i< TYPE_QUARTIERS.length; i++) {  //Boucle qui nous permets de parcourir chaque élément du tableau TYPES_QUARTIERS
-			 if(TYPE_QUARTIERS[i]==type) {
+			 if( type.equals(TYPE_QUARTIERS[i]) ) {
+				  correct=true;
+			 }
+		 }if(correct) {
+			 this.type = type;
+		 }else {
+			 this.type="";
+		 }
+	 
+	 */
+		 int  compteur = 0;
+		 while (compteur <TYPE_QUARTIERS.length && this.type!=type) {
+			 if (type.equals(TYPE_QUARTIERS[compteur])){
 				 this.type=type;
 			 }else {
 				 this.type="";
 			 }
-		 }
+			 compteur++;
+		 } 	 
 	 }
-
+	 
 	//Accesseurs CoutConstruction
 	public int getCout() {
 		return this.coutConstruction;
