@@ -1,5 +1,6 @@
 package modele;
 //bryan test 10-11-21
+//la c'est bonne !
 public class Quartier {
 	
 	//Attributs
