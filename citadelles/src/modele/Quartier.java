@@ -1,6 +1,5 @@
 package modele;
-//bryan test 10-11-21
-//la c'est bonne !
+
 public class Quartier {
 	
 	//Attributs
@@ -9,7 +8,7 @@ public class Quartier {
 	public static final String[] TYPE_QUARTIERS= {"RELIGIEUX", "MILITAIRE", "NOBLE", "COMMERCANT", "MERVEILLE"};
 	
 	
-	//Constructeurs
+	//Constructeurs réalisé avec l'appelle des accesseurs
 	
 	public Quartier(String nom, String type, int cout){
 		this.setNom(nom);
@@ -44,8 +43,12 @@ public class Quartier {
 	 }
 	 
 	 public void setType(String type) {
-		 /*boolean correct = false ;
-		 for(int i=0; i< TYPE_QUARTIERS.length; i++) {  //Boucle qui nous permets de parcourir chaque Ã©lÃ©ment du tableau TYPES_QUARTIERS
+		 
+		 /*
+		  *PREMIERE VERSION DE LA BOUCLE
+		  * 
+		  * boolean correct = false ;
+		 for(int i=0; i< TYPE_QUARTIERS.length; i++) {  //Boucle qui nous permets de parcourir chaque élément du tableau TYPES_QUARTIERS
 			 if( type.equals(TYPE_QUARTIERS[i]) ) {
 				  correct=true;
 			 }
@@ -80,7 +83,7 @@ public class Quartier {
 		}
 	}
 	
-	//Accesseurs CaractÃ©ristiques
+	//Accesseurs Caractéristiques
 	
 	public String getCaracteristiques() {
 		return this.caracteristiques;

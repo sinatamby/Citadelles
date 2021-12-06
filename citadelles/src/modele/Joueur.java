@@ -1,92 +1,72 @@
 package modele;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Joueur {
-
-	
-	//Attributs
-	private String nom;
+	//attributs
 	private int tresor, nbQuartiers;
+	private String nom;
 	private boolean possedeCouronne;
-	private Quartier[]cite;
-	//private static final Quartier[] cite = {};
-	private ArrayList<Quartier> main= new ArrayList<Quartier>();
-	
-	//Constructeur
-	public Joueur(String nom){
-		this.setNom(nom); //probablement à changer en mode : this.nom=nom;
+	private Quartier[] cite;
+	private ArrayList<Quartier> main;
+	//constructeur
+	public Joueur(String nom) {
+		this.nom=nom;
 		this.tresor=0;
 		this.nbQuartiers=0;
 		this.possedeCouronne=false;
-		this.cite= new Quartier[8];
-		this.main = new ArrayList<Quartier>();
-
+		this.cite=new Quartier[8];
+		this.main=new ArrayList<Quartier>();
 	}
-	
-	//Accesseurs de nom
+	//accesseurs
 	public String getNom() {
 		return this.nom;
 	}
-	
-	public void setNom(String nom) {
-		this.nom=nom;
-	}
-	
-	//Accesseurs de Pieces
 	public int nbPieces() {
 		return this.tresor;
 	}
-	
-	//Accesseurs de nbQuartiersDansCite
 	public int nbQuartiersDansCite() {
 		return this.nbQuartiers;
 	}
-	//Accesseurs cité
 	public Quartier[] getCite() {
 		return this.cite;
 	}
 	
-	//Accesseurs Main
-	public ArrayList<Quartier> getMain(){
+	//getQuartier pour la question 4 du 2.5 "Roi"
+	public Quartier getQuartier(int quartier) {
+		return this.cite[quartier];
+	}
+	
+	public ArrayList<Quartier> getMain() {
 		return this.main;
 	}
-	
-	//Accesseur de nbQuartierDansMain
 	public int nbQuartiersDansMain() {
-		//for(int i=0; i<this.main.size();i++)
-			// peut etre simplement return la taile de main si ce dernier est une list évolutif à revoir avant de se compliquer la tache
-		return this.main.size() ; // après vérification il semble que cela soit fonctionnel.
+		return this.main.size();
 	}
-	
-	//Accesseur de Possede couronne
 	public boolean getPossedeCouronne() {
 		return this.possedeCouronne;
 	}
 	public void setPossedeCouronne(boolean b) {
 		this.possedeCouronne=b;
 	}
-	
-	//Méthodes
-	
-	public void ajouterPieces(int gold) {
-		if(gold>0) {
-			this.tresor+=gold;
+	//m�thodes
+	public void ajouterPieces(int pieces){
+		if(pieces>=0) {
+			this.tresor+=pieces;
 		}
 	}
-	
-	public void retirerPieces(int gold) {
-		if(gold<=this.tresor && gold >0) {
-			this.tresor-=gold;
+	public void retirerPieces(int pieces){
+		if(pieces<=nbPieces() && pieces>0) {
+			this.tresor-=pieces;
 		}
 	}
-	
 	public void ajouterQuartierDansCite(Quartier quartier) {
 		if(nbQuartiers<8) {
 			this.cite[nbQuartiers]=quartier;
 			nbQuartiers++;
 		}
 	}
-	
 	public boolean quartierPresentDansCite(String nom) {
 		int i=0;
 		boolean retour=false;
@@ -98,7 +78,6 @@ public class Joueur {
 		}
 		return retour;
 	}
-	
 	public Quartier retirerQuartierDansCite(String nom) {
 		int i=0;
 		Quartier efface=null;
@@ -112,7 +91,32 @@ public class Joueur {
 		}
 		return efface;
 	}
+	public void ajouterQuartierDansMain(Quartier quartier) {
+		this.main.add(quartier);
+	}
+	public Quartier retirerQuartierDansMain() {
+		Quartier retour=null;
+		if(nbQuartiersDansMain()>0) {
+			Random generateur = new Random();
+			int numeroHasard = generateur.nextInt(this.nbQuartiersDansMain());
+			retour=this.main.get(numeroHasard);
+			this.main.remove(numeroHasard);
+		}
+		return retour;
+	}
+	
+	public void reinitialiser() {
+		this.tresor=0;
+		this.nbQuartiers=0;
+		this.main.clear();
+		for(int i=0; i<this.cite.length; i++ ) {
+				this.cite[i]=null;
+				if (this.cite[i]==null) {
+				}
+			}
+		
+		}
+		
+	}
 	
 	
-	
-}

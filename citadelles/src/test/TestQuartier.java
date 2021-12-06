@@ -4,16 +4,18 @@ import modele.Quartier;
 public class TestQuartier {
 	public static void main(String[] args){
 		TestQuartier testQuartier = new TestQuartier();
-		testQuartier.test1();	
-		//testQuartier.test2();
-		//testQuartier.test3();
-		//testQuartier.test4();
-		//testQuartier.test5();
-		//testQuartier.test6();
-		//testQuartier.test7();
+		//testQuartier.test1();	
+		testQuartier.test2();
+		testQuartier.test3();
+		testQuartier.test4();
+		testQuartier.test5();
+		testQuartier.test6();
+		testQuartier.test7();
 		//testQuartier.test8();
 	}
-
+	
+	
+/*
 	public void test1(){
 		System.out.println("TEST DU CONSTRUCTEUR VIDE");
 		Quartier quartier = new Quartier();
@@ -22,7 +24,7 @@ public class TestQuartier {
 		Test.test(quartier.getCout() == 0,"test du cout du quartier");
 		Test.test(quartier.getCaracteristiques().equals(""),"test des caracteristiques du quartier");
 	}
-/*
+*/
 	public void test2(){
 		System.out.println("TEST POUR UN TEMPLE (RELIGIEUX");
 		Quartier quartier = new Quartier("temple",Quartier.TYPE_QUARTIERS[0],1);
@@ -87,6 +89,7 @@ public class TestQuartier {
 			"test du changement des caracteristiques");
 	}
 	
+/*	
 	public void test8(){
 		// ce test est à faire pour le personnage "Artiste" :
 		System.out.println("TEST POUR L'ENRICHISSEMENT D'UN TEMPLE");
@@ -99,5 +102,6 @@ public class TestQuartier {
 		// un deuxième embellissement ne devrait pas changer le coût:
 		quartier.embellir();
 		Test.test(quartier.getCout() == 2,"test du cout apres un deuxieme appel (pas de changment du cout)");
-	}*/
+	}
+	*/
 }
