@@ -6,10 +6,10 @@ import modele.Quartier;
 public class TestPioche {
 	public static void main(String[] args) {
 		TestPioche testPioche= new TestPioche();
-		testPioche.test1();
+		//testPioche.test1();
 		//testPioche.test2();
 		//testPioche.test3();
-		//testPioche.test4();
+		testPioche.test4();
 	}
 	
 	public void test1() {
@@ -68,7 +68,7 @@ public class TestPioche {
 		q = new Quartier("hôtel de ville",Quartier.TYPE_QUARTIERS[3],15); pioche.ajouter(q);
 		q = new Quartier("bibliothèque",Quartier.TYPE_QUARTIERS[4],6,"Si vous choisissez..."); 
 		pioche.ajouter(q);
-
+		
 		pioche.melanger();		
 		Test.test(pioche.nombreElements()==10, "taille de la pioche après mélange");
 		System.out.println("Affichage de la pioche après mélange : ");
