@@ -70,10 +70,9 @@ public class Magicienne extends Personnage{
 					copieTableauMagicienne.remove(num);
 					this.getPlateau().getPioche().piocher();
 				}
-				
-				
-			}
-					
+				this.getJoueur().getMain().clear();
+				this.getJoueur().getMain().addAll(copieTableauMagicienne);
+			}	
 		}
 	}
 }
