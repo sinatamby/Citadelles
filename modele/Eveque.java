@@ -9,8 +9,10 @@ public class Eveque extends Personnage{
 	public void utiliserPouvoir(){}
 	
 	public void percevoirRessourcesSpecifiques() {
-		for(int i=0;i<this.getJoueur().getCite().length;i++) {
-			
+		for(int i=0;i<this.getJoueur().nbQuartiersDansCite();i++) {
+			if(this.getJoueur().getQuartier(i).getType()=="RELIGIEUX") {
+				this.getJoueur().ajouterPieces(1);
+			}
 		}
 	}
 }
