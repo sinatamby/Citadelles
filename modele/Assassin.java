@@ -8,6 +8,7 @@ public class Assassin extends Personnage{
 		this.nom="Assassin";
 		this.rang=1;
 		this.caracteristiques=Caracteristiques.ASSASSIN;
+		//testpourgithub
 	}
 	//méthode
 	public void utiliserPouvoir() {
