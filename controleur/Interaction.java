@@ -35,7 +35,7 @@ public class Interaction {
 					throw new Exception();
 				}
 			} catch (Exception e) {
-				System.out.print("L'entier doit être inférieur à "+borneMax);
+				System.out.println("L'entier doit être inférieur à "+borneMax);
 			}
 		} while(continu);
 		return i;

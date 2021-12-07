@@ -86,7 +86,7 @@ public class Joueur {
 		boolean trouve=false;
 		Quartier efface=new Quartier();
 		if(quartierPresentDansCite(nom)) {
-			for(int i=0;i<this.nbQuartiers;i++) {
+			for(int i=0;i<this.nbQuartiers+1;i++) {
 				if(nom==this.cite[i].getNom()) {
 					efface=this.cite[i];
 					trouve=true;
