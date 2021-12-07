@@ -5,9 +5,7 @@ import controleur.Interaction;
 public class Voleur extends Personnage{
 	//constructeur
 	public Voleur() {
-		this.nom="Voleur";
-		this.rang=2;
-		this.caracteristiques=Caracteristiques.VOLEUR;
+		super("Voleur",2,Caracteristiques.VOLEUR);
 	}
 	//méthode
 	public void utiliserPouvoir() {

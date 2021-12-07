@@ -7,9 +7,7 @@ import controleur.Interaction;
 public class Magicienne extends Personnage{
 	//constructeur
 	public Magicienne() {
-		this.nom="Magicienne";
-		this.rang=3;
-		this.caracteristiques=Caracteristiques.MAGICIENNE;
+		super("Magicienne",3,Caracteristiques.MAGICIENNE);
 	}
 	//méthode
 	public void utiliserPouvoir() {

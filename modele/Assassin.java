@@ -5,10 +5,7 @@ import controleur.Interaction;
 public class Assassin extends Personnage{
 	//constructeur
 	public Assassin() {
-		this.nom="Assassin";
-		this.rang=1;
-		this.caracteristiques=Caracteristiques.ASSASSIN;
-		//testpourgithub
+		super("Assassin",1,Caracteristiques.ASSASSIN);
 	}
 	//méthode
 	public void utiliserPouvoir() {
