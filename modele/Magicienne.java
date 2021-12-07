@@ -52,22 +52,28 @@ public class Magicienne extends Personnage{
 				System.out.println("Vous n'échangez aucune cartes.");
 			} else if(nb==this.getJoueur().getMain().size()) {
 				ArrayList<Quartier> copieTableauMagicienne=new ArrayList<Quartier>(this.getJoueur().getMain());
-				for(int i=0;i<this.getJoueur().getMain().size();i++) {
+				this.getJoueur().getMain().clear();
+				for(int i=0;i<nb;i++) {
 					this.getPlateau().getPioche().ajouter(copieTableauMagicienne.get(i));
 					copieTableauMagicienne.remove(i);
-					this.getPlateau().getPioche().piocher();
+					copieTableauMagicienne.add(i, this.getPlateau().getPioche().piocher()) ;
 				}
+				this.getJoueur().getMain().addAll(copieTableauMagicienne);
 			} else {
 				ArrayList<Quartier> copieTableauMagicienne=new ArrayList<Quartier>(this.getJoueur().getMain());
 				System.out.println("Voici les cartes de votre main : ");
 				for(int i=1;i<=this.getJoueur().getMain().size();i++) {
 					System.out.println(i+" "+this.getJoueur().getMain().get(i-1).getNom()+" - type : "+this.getJoueur().getMain().get(i-1).getType()+" - pièces : "+this.getJoueur().getMain().get(i-1).getCout());
 				}
-				for(int i=1;i<=this.getJoueur().getMain().size();i++) {
+				if(nb>1) {
 					System.out.println("Quel est le numéro de la carte que vous voulez retirer ? ");
-					int num=Interaction.lireUnEntier(1, i+1);
-					this.getPlateau().getPioche().ajouter(copieTableauMagicienne.get(num));
-					copieTableauMagicienne.remove(num);
+				} else {
+					System.out.println("Quel sont les numéros des cartes que vous voulez retirer ? ");
+				}
+				for(int i=1;i<=nb;i++) {
+					int num=Interaction.lireUnEntier(1, nb+2);
+					this.getPlateau().getPioche().ajouter(copieTableauMagicienne.get(num-1));
+					copieTableauMagicienne.remove(num-1);
 					this.getPlateau().getPioche().piocher();
 				}
 				this.getJoueur().getMain().clear();
