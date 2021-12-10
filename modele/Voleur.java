@@ -7,7 +7,7 @@ public class Voleur extends Personnage{
 	public Voleur() {
 		super("Voleur",2,Caracteristiques.VOLEUR);
 	}
-	//méthode
+	//mÃ©thode
 	public void utiliserPouvoir() {
 		int i=1;
 		int lecture=0;
@@ -26,7 +26,7 @@ public class Voleur extends Personnage{
 				} else {
 					this.getPlateau().getPersonnage(lecture-1).setVole();
 					this.getJoueur().ajouterPieces(this.getPlateau().getJoueur(lecture-1).nbPieces());
-					this.getPlateau().getJoueur(lecture-1).retirerPieces(this.getJoueur().nbPieces());
+					this.getPlateau().getJoueur(lecture-1).retirerPieces(this.getPlateau.getJoueur(lecture-1).nbPieces());
 					continu=false;
 				}
 			}catch (Exception e){
