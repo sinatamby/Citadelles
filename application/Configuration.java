@@ -1,7 +1,5 @@
 package application;
-
 import modele.*;
-
 public class Configuration {
 	public static Pioche nouvellePioche() {
 		Pioche pioche=new Pioche();

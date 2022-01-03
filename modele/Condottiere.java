@@ -29,20 +29,23 @@ public class Condottiere extends Personnage{
 				System.out.println("");
 			}
 			System.out.println("Pour information, vous avez "+this.getJoueur().nbPieces()+" pièces d'or dans votre trésor.");
-			System.out.println("Quel joueur-1 choisissez vous ? (0 pour ne rien faire)");
+			System.out.println("Quel joueur choisissez vous ? (0 pour ne rien faire)");
 			boolean continu=true;
 			boolean possible=false;
 			int joueur=0;
 			do {
 				try {
-					joueur=Interaction.lireUnEntier(0, this.getPlateau().getNombreJoueurs()+1);
+					joueur=Interaction.lireUnEntier(0, this.getPlateau().getNombreJoueurs()+2);
+					if(joueur==0) {
+						continu=false;
+					}
 					for(int i=0;i<this.getPlateau().getJoueur(joueur-1).nbQuartiersDansCite();i++) {
 						if(this.getPlateau().getJoueur(joueur-1).getQuartier(i).getCout()-1<=this.getJoueur().nbPieces()) {
 							possible=true;
 						}
 					}
 					if(possible==false){
-						System.out.println("Vous ne pouvez pas choisir ce joueur-1 car ces quartiers valent trop cher.");
+						System.out.println("Vous ne pouvez pas choisir ce joueur car ces quartiers valent trop cher.");
 						throw new Exception();
 					} else if(this.getPlateau().getJoueur(joueur-1).getPersonnage().getRang()==8) {
 						System.out.println("Vous ne pouvez pas vous choisir.");
@@ -54,7 +57,9 @@ public class Condottiere extends Personnage{
 					System.out.print("Votre choix : ");
 				}
 			} while(continu);
-			if(joueur!=0) {
+			if(joueur==0) {
+				System.out.println("Vous ne faites rien.");
+			} else {
 				System.out.print(this.getPlateau().getJoueur(joueur-1).getNom()+": ");
 				for(int j=1;j<=this.getPlateau().getJoueur(joueur-1).nbQuartiersDansCite();j++) {
 					System.out.print(j+" "+this.getPlateau().getJoueur(joueur-1).getQuartier(j-1).getNom()+"(coût "+this.getPlateau().getJoueur(joueur-1).getQuartier(j-1).getCout()+") ");
@@ -81,8 +86,6 @@ public class Condottiere extends Personnage{
 				} while(continu);
 				System.out.println("Le quartier \""+this.getPlateau().getJoueur(joueur-1).getQuartier(quartier-1).getNom()+"\" de "+this.getPlateau().getJoueur(joueur-1).getNom()+" a été supprimé");
 				this.getPlateau().getJoueur(joueur-1).retirerQuartierDansCite(this.getPlateau().getJoueur(joueur-1).getQuartier(quartier-1).getNom());
-			} else {
-				System.out.println("Vous ne faites rien.");
 			}
 		} else {
 		System.out.println("Vous n'utilisez pas votre pouvoir.");

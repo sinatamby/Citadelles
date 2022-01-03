@@ -1,5 +1,4 @@
 package modele;
-
 public abstract class Personnage{
 	//attributs
 	protected int rang;
