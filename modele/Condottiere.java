@@ -52,6 +52,9 @@ public class Condottiere extends Personnage{
 					} else if(this.getPlateau().getJoueur(joueur-1).getPersonnage().getRang()==8) {
 						System.out.println("Vous ne pouvez pas vous choisir.");
 						throw new Exception();
+					} else if(this.getPlateau().getJoueur(joueur-1).getPersonnage().getRang()==5) {
+						System.out.println("L'Eveque est protégé de votre pouvoir.");
+						throw new Exception();
 					} else {
 						continu=false;
 					}
@@ -96,5 +99,9 @@ public class Condottiere extends Personnage{
 	public void utiliserPouvoirAvatar() {
 		Random rand=new Random();
 		int choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
+		while (this.getPlateau().getPersonnage(choixAlea).getRang()==8 || this.getPlateau().getPersonnage(choixAlea).getRang()==5) {
+			choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
+		}
+		
 	}
 }
