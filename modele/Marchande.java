@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 public class Marchande extends Personnage{
 	//constructeur
 	public Marchande() {
@@ -15,5 +17,8 @@ public class Marchande extends Personnage{
 				this.getJoueur().ajouterPieces(1);
 			}
 		}
+	}
+	public void utiliserPouvoirAvatar(){
+		this.getJoueur().ajouterPieces(1);
 	}
 }

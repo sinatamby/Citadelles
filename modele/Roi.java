@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 public class Roi extends Personnage{
 	//constructeur
 	public Roi() {
@@ -24,6 +26,12 @@ public class Roi extends Personnage{
 			}
 			this.joueur.ajouterPieces(compte);
 			System.out.println("Vous avez "+compte+" pieces dans votre trésor !");
+		}
+	}
+	public void utiliserPouvoirAvatar() {
+		if(this.joueur!=null && this.assassine==false) {
+			System.out.println("Je prends la courronne");
+			getJoueur().setPossedeCouronne(true);
 		}
 	}
 }

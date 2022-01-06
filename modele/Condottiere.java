@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 import controleur.Interaction;
 
 public class Condottiere extends Personnage{
@@ -20,7 +22,7 @@ public class Condottiere extends Personnage{
 		System.out.println("Voulez-vous utiliser votre pouvoir de destruction ?");
 		boolean reponse=Interaction.lireOuiOuNon();
 		if(reponse) {
-			System.out.println("Voici la liste des joueur-1s et le contenu de leur cité :");
+			System.out.println("Voici la liste des joueurs et le contenu de leur cité :");
 			for(int i=1;i<=this.getPlateau().getNombreJoueurs();i++) {
 				System.out.print(i+" "+this.getPlateau().getJoueur(i-1).getNom()+": ");
 				for(int j=1;j<=this.getPlateau().getJoueur(i-1).nbQuartiersDansCite();j++) {
@@ -90,5 +92,9 @@ public class Condottiere extends Personnage{
 		} else {
 		System.out.println("Vous n'utilisez pas votre pouvoir.");
 		}
+	}
+	public void utiliserPouvoirAvatar() {
+		Random rand=new Random();
+		int choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
 	}
 }

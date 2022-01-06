@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 public class Eveque extends Personnage{
 	//constructeur
 	public Eveque(){
@@ -15,4 +17,5 @@ public class Eveque extends Personnage{
 			}
 		}
 	}
+	public void utiliserPouvoirAvatar() {}
 }

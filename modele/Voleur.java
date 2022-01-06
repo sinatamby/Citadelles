@@ -1,5 +1,7 @@
 package modele;
 
+import java.util.Random;
+
 import controleur.Interaction;
 
 public class Voleur extends Personnage{
@@ -34,5 +36,16 @@ public class Voleur extends Personnage{
 				System.out.print("Votre choix : ");
 			}
 		} while (continu);			
+	}
+	public void utiliserPouvoirAvatar() {
+		Random rand=new Random();
+		int choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
+		while (this.getPlateau().getPersonnage(choixAlea).getRang()<=2) {
+			choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
+		}
+		this.getPlateau().getPersonnage(choixAlea).setVole();
+		this.getJoueur().ajouterPieces(this.getPlateau().getJoueur(choixAlea).nbPieces());
+		this.getPlateau().getJoueur(choixAlea).retirerPieces(this.getPlateau().getJoueur(choixAlea).nbPieces());
+		System.out.println("Le personnage numéro "+(choixAlea+1)+" ("+this.getPlateau().getPersonnage(choixAlea).getNom()+") a été volé.");
 	}
 }
