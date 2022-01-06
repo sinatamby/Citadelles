@@ -1,6 +1,7 @@
 package modele;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import controleur.Interaction;
 
@@ -78,5 +79,13 @@ public class Magicienne extends Personnage{
 				this.getJoueur().getMain().addAll(copieTableauMagicienne);
 			}	
 		}
+	}
+	public void utiliserPouvoirAvatar() {
+		Random rand=new Random();
+		int choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
+		while (this.getPlateau().getPersonnage(choixAlea).getRang()==3) {
+			choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
+		}
+		
 	}
 }

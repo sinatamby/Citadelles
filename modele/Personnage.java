@@ -85,6 +85,7 @@ public abstract class Personnage{
 	
 	abstract void utiliserPouvoir();
 		//méthode abstraite nécessite classe abstraite
+	abstract void utiliserPouvoirAvatar();
 	
 	public void reinitialiser() {
 		this.assassine=false;
