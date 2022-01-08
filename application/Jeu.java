@@ -1,5 +1,6 @@
 package application;
 
+import java.util.Iterator;
 import java.util.Random;
 import controleur.Interaction;
 import modele.*;
@@ -58,6 +59,21 @@ public class Jeu {
 		this.plateauDeJeu.getJoueur(joueur).getPossedeCouronne();
 	}
 	private void gestionCouronne() {
+		for(int i=0;i<this.plateauDeJeu.getNombrePersonnages();i++) {
+			if (this.plateauDeJeu.getPersonnage(i).getCaracteristiques()==Caracteristiques.ROI) {
+				for(int j=0;j<this.plateauDeJeu.getNombreJoueurs();j++) {
+					if (this.plateauDeJeu.getJoueur(j).getPersonnage().getCaracteristiques()==Caracteristiques.ROI) {
+						this.plateauDeJeu.getJoueur(j).setPossedeCouronne(true);
+					}
+				}
+			} else {
+				for(int j=0;j<this.plateauDeJeu.getNombreJoueurs();j++) {
+					if (this.plateauDeJeu.getJoueur(j).getPossedeCouronne()) {
+						this.plateauDeJeu.getJoueur(j).setPossedeCouronne(true);
+					}
+				}
+			}
+		}
 		
 	}
 	private void reinitialisationPersonnages() {
