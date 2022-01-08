@@ -45,6 +45,7 @@ public class Jeu {
 			reinitialisationPersonnages();
 		}
 		partieFinie();
+		calculDesPoints();
 	}
 	private void initialisation() {
 		Configuration.configurationDeBase(Configuration.nouvellePioche());
@@ -356,6 +357,28 @@ public class Jeu {
 		}
 	}
 	private void calculDesPoints() {
-		
+		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
+			int totalCout=0;
+			boolean rel=false,mil=false,nob=false,com=false,mer=false;
+			Quartier[] citeJoueur=this.plateauDeJeu.getJoueur(i).getCite();
+			for(int j=0;j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite();j++) {
+				totalCout=totalCout+citeJoueur[j].getCout();
+				if 		 (citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[1]) {
+					rel=true;
+				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[2]) {
+					mil=true;
+				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[3]) {
+					nob=true;
+				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[4]) {
+					com=true;
+				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[5]) {
+					mer=true;
+				}
+			}
+			if (rel&&mil&&nob&&com&&mer) {
+				totalCout=totalCout+3;
+			}
+			
+		}
 	}
 }
