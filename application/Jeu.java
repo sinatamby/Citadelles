@@ -67,7 +67,10 @@ public class Jeu {
 		return true;
 	}
 	private void tourDeJeu() {
-		
+		choixPersonnages();
+		for(int i=0;i<this.plateauDeJeu.getNombrePersonnages();i++) {
+			
+		}
 	}
 	private void choixPersonnages() {
 		System.out.println("Choix des personnages :");
