@@ -69,7 +69,7 @@ public class Jeu {
 	private void tourDeJeu() {
 		choixPersonnages();
 		for(int i=0;i<this.plateauDeJeu.getNombrePersonnages();i++) {
-			
+			System.out.println("C'est au tour du personnage de rang "+this.plateauDeJeu.getPersonnage(i).getRang());
 			if (this.plateauDeJeu.getPersonnage(i).getAssassine()) {
 				System.out.println("Vous etes assassiné, vous passez votre tour");
 			} else if (this.plateauDeJeu.getPersonnage(i).getVole()) {
@@ -80,7 +80,16 @@ public class Jeu {
 				}
 				this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
 			} else {
-				
+				percevoirRessources();
+				this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
+				System.out.println("Voulez utiliser votre pouvoir ?");
+				if(Interaction.lireOuiOuNon()) {
+					this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
+				}
+				System.out.println("Voulez vous construire ?");
+				if(Interaction.lireOuiOuNon()) {
+					this.plateauDeJeu.getPersonnage(i).construire(null);
+				}
 			}
 		}
 		
