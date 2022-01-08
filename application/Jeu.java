@@ -87,7 +87,7 @@ public class Jeu {
 				this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
 			} else {
 				if(this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()=="Player1") {
-					percevoirRessources();
+					percevoirRessources(i);
 					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
 					System.out.println("Voulez utiliser votre pouvoir ?");
 					if(Interaction.lireOuiOuNon()) {
@@ -144,7 +144,7 @@ public class Jeu {
 						}
 					}
 				} else {
-					percevoirRessources();
+					percevoirRessources(i);
 					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
 					int rand=generateur.nextInt(1);
 					if(rand==1) {
@@ -296,27 +296,44 @@ public class Jeu {
 			}
 		}
 	}
-	private void percevoirRessources() {
-		
-		System.out.println("Ques souhaitez vous faire ?");
-		System.out.println("1 Prendre deux pièces d'or");
-		System.out.println("2 piocher deux quartier et en garder un");
-		int choix=Interaction.lireUnEntier(1, 3);
-		if(choix==1) {
-			this.plateauDeJeu.getJoueur(choix).ajouterPieces(2);
-		} else if(choix==2) {
-			Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
-			System.out.println("1 "+quartier1.getNom()+" ,type: "+quartier1.getType()+" ,coût:"+quartier1.getCout());
-			Quartier quartier2=this.plateauDeJeu.getPioche().piocher();
-			System.out.println("2 "+quartier2.getNom()+" ,type: "+quartier2.getType()+" ,coût:"+quartier2.getCout());
-			System.out.println("Lequel gardez vous ?");
-			int garder=Interaction.lireUnEntier(1, 3);
-			if(garder==1){
-				this.plateauDeJeu.getJoueur(choix).ajouterQuartierDansMain(quartier1);
-				this.plateauDeJeu.getPioche().ajouter(quartier2);
-			} else if(garder==2) {
-				this.plateauDeJeu.getJoueur(choix).ajouterQuartierDansMain(quartier2);
-				this.plateauDeJeu.getPioche().ajouter(quartier1);
+	private void percevoirRessources(int perso) {
+		if(this.plateauDeJeu.getPersonnage(perso).getJoueur().getNom()=="Player1") {
+			System.out.println("Ques souhaitez vous faire ?");
+			System.out.println("1 Prendre deux pièces d'or");
+			System.out.println("2 piocher deux quartier et en garder un");
+			int choix=Interaction.lireUnEntier(1, 3);
+			if(choix==1) {
+				this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterPieces(2);
+			} else if(choix==2) {
+				Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
+				System.out.println("1 "+quartier1.getNom()+" ,type: "+quartier1.getType()+" ,coût:"+quartier1.getCout());
+				Quartier quartier2=this.plateauDeJeu.getPioche().piocher();
+				System.out.println("2 "+quartier2.getNom()+" ,type: "+quartier2.getType()+" ,coût:"+quartier2.getCout());
+				System.out.println("Lequel gardez vous ?");
+				int garder=Interaction.lireUnEntier(1, 3);
+				if(garder==1){
+					this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier1);
+					this.plateauDeJeu.getPioche().ajouter(quartier2);
+				} else if(garder==2) {
+					this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier2);
+					this.plateauDeJeu.getPioche().ajouter(quartier1);
+				}
+			}
+		} else {
+			int choix=generateur.nextInt(1);
+			if(choix==0) {
+				this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterPieces(2);
+			} else if(choix==1) {
+				Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
+				Quartier quartier2=this.plateauDeJeu.getPioche().piocher();
+				int garder=generateur.nextInt(1);
+				if(garder==0){
+					this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier1);
+					this.plateauDeJeu.getPioche().ajouter(quartier2);
+				} else if(garder==1) {
+					this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier2);
+					this.plateauDeJeu.getPioche().ajouter(quartier1);
+				}
 			}
 		}
 	}
