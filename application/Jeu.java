@@ -77,7 +77,9 @@ public class Jeu {
 		
 	}
 	private void reinitialisationPersonnages() {
-		
+		for(int i=0;i<this.plateauDeJeu.getNombrePersonnages();i++) {
+			this.plateauDeJeu.getPersonnage(i).reinitialiser();
+		}
 	}
 	private boolean partieFinie() {
 		boolean retour=false;
