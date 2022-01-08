@@ -27,8 +27,6 @@ public class Voleur extends Personnage{
 					throw new Exception();
 				} else {
 					this.getPlateau().getPersonnage(lecture-1).setVole();
-					this.getJoueur().ajouterPieces(this.getPlateau().getJoueur(lecture-1).nbPieces());
-					this.getPlateau().getJoueur(lecture-1).retirerPieces(this.getPlateau().getJoueur(lecture-1).nbPieces());
 					continu=false;
 				}//
 			}catch (Exception e){
