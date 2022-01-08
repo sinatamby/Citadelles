@@ -64,14 +64,20 @@ public class Jeu {
 		
 	}
 	private boolean partieFinie() {
-		return true;
+		boolean retour=false;
+		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
+			if (this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()==8) {
+				retour=true;
+			}
+		}
+		return retour;
 	}
 	private void tourDeJeu() {
 		choixPersonnages();
 		for(int i=0;i<this.plateauDeJeu.getNombrePersonnages();i++) {
 			System.out.println("C'est au tour du personnage de rang "+this.plateauDeJeu.getPersonnage(i).getRang());
 			if (this.plateauDeJeu.getPersonnage(i).getAssassine()) {
-				System.out.println("Vous etes assassiné, vous passez votre tour");
+				System.out.println("Personnage assassiné, le tour passe");
 			} else if (this.plateauDeJeu.getPersonnage(i).getVole()) {
 				for(int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
 					if(this.plateauDeJeu.getPersonnage(j).getCaracteristiques()==Caracteristiques.VOLEUR) {
@@ -80,58 +86,103 @@ public class Jeu {
 				}
 				this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
 			} else {
-				percevoirRessources();
-				this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
-				System.out.println("Voulez utiliser votre pouvoir ?");
-				if(Interaction.lireOuiOuNon()) {
-					this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
-				}
-				System.out.println("Voulez vous construire ?");
-				if(Interaction.lireOuiOuNon()) {
-					System.out.println("Quel quartier voulez vous construire ?");
-					for(int j=0;j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite();j++) {
-						System.out.println((i+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
+				if(this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()=="Player1") {
+					percevoirRessources();
+					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
+					System.out.println("Voulez utiliser votre pouvoir ?");
+					if(Interaction.lireOuiOuNon()) {
+						this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
 					}
-					boolean continu=true;
-					do {
-						try {
-							int choix=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
-							if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
-								throw new Exception();
-							} else {
-								this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
-								this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
-								this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
-							}
-						} catch (Exception e) {
-							System.out.println("Coût trop élevé");
-							System.out.println("Votre choix :");
+					System.out.println("Voulez vous construire ?");
+					if(Interaction.lireOuiOuNon()) {
+						System.out.println("Quel quartier voulez vous construire ?");
+						for(int j=0;j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite();j++) {
+							System.out.println((i+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
 						}
-					} while (continu);
-					if(this.plateauDeJeu.getPersonnage(i).getCaracteristiques()==Caracteristiques.ARCHITECTE) {
-						for(int k=1;k<3;k++) {
-							System.out.println("Voulez vous construire un "+(k)+"eme quartier ?");
-							if (Interaction.lireOuiOuNon()) {
-								System.out.println("Quel quartier voulez vous construire ?");
-								for(int j=0;j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite();j++) {
-									System.out.println((i+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
+						boolean continu=true;
+						do {
+							try {
+								int choix=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
+								if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+									throw new Exception();
+								} else {
+									this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
+									this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+									this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
 								}
-								continu=true;
-								do {
-									try {
-										int choix=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
-										if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
-											throw new Exception();
-										} else {
-											this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
-											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
-											this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
-										}
-									} catch (Exception e) {
-										System.out.println("Coût trop élevé");
-										System.out.println("Votre choix :");
+							} catch (Exception e) {
+								System.out.println("Coût trop élevé");
+								System.out.println("Votre choix :");
+							}
+						} while (continu);
+						if(this.plateauDeJeu.getPersonnage(i).getCaracteristiques()==Caracteristiques.ARCHITECTE) {
+							for(int k=1;k<3;k++) {
+								System.out.println("Voulez vous construire un "+(k)+"eme quartier ?");
+								if (Interaction.lireOuiOuNon()) {
+									System.out.println("Quel quartier voulez vous construire ?");
+									for(int j=0;j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite();j++) {
+										System.out.println((i+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
 									}
-								} while (continu);
+									continu=true;
+									do {
+										try {
+											int choix=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
+											if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+												throw new Exception();
+											} else {
+												this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
+												this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+												this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
+											}
+										} catch (Exception e) {
+											System.out.println("Coût trop élevé");
+											System.out.println("Votre choix :");
+										}
+									} while (continu);
+								}
+							}
+						}
+					}
+				} else {
+					percevoirRessources();
+					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
+					int rand=generateur.nextInt(1);
+					if(rand==1) {
+						this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
+					}
+					rand=generateur.nextInt(1);
+					if(rand==1) {
+						boolean continu=true;
+						do {
+							try {
+								int choix=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size())+1;
+								if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+									throw new Exception();
+								} else {
+									this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
+									this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+									this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
+								}
+							} catch (Exception e) {}
+						} while (continu);
+						if(this.plateauDeJeu.getPersonnage(i).getCaracteristiques()==Caracteristiques.ARCHITECTE) {
+							for(int k=1;k<3;k++) {
+								rand=generateur.nextInt(1);
+								if (rand==1) {
+									continu=true;
+									do {
+										try {
+											int choix=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size())+1;
+											if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+												throw new Exception();
+											} else {
+												this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
+												this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+												this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
+											}
+										} catch (Exception e) {}
+									} while (continu);
+								}
 							}
 						}
 					}
@@ -158,6 +209,52 @@ public class Jeu {
 		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
 			if (this.plateauDeJeu.getJoueur(i).getPossedeCouronne()) {
 				System.out.println("Vous avez la couronne !");
+				if(this.plateauDeJeu.getJoueur(i).getNom()=="Player1") {
+					for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
+						System.out.println(this.plateauDeJeu.getPersonnage(j).getRang()+" "+this.plateauDeJeu.getPersonnage(j).getNom());
+					}
+					System.out.println("Choisissez votre personnage");
+					boolean continu=true;
+					do {
+						try {
+							int choix=Interaction.lireUnEntier(1, 9);
+							for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
+								if(choix==this.plateauDeJeu.getPersonnage(j).getRang()) {
+									this.plateauDeJeu.getPersonnage(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+									this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(j));
+									continu=false;
+								} else {
+									throw new Exception();
+								}
+							}
+						} catch (Exception e) {
+							System.out.println("Ce personnage n'est pas disponible.");
+							System.out.println("Votre choix :");
+						}
+					} while (continu);
+				} else {
+					boolean continu=true;
+					do {
+						try {
+							int choix=generateur.nextInt(7)+1;
+							for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
+								if(choix==this.plateauDeJeu.getPersonnage(j).getRang()) {
+									this.plateauDeJeu.getPersonnage(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+									this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(j));
+									continu=false;
+								} else {
+									throw new Exception();
+								}
+							}
+						} catch (Exception e) {}
+					} while (continu);
+				}
+				
+			}
+		}
+		//les joueurs restants
+		for (int i=0;i<this.plateauDeJeu.getNombreJoueurs()-1;i++) {
+			if(this.plateauDeJeu.getJoueur(i).getNom()=="Player1") {
 				for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
 					System.out.println(this.plateauDeJeu.getPersonnage(j).getRang()+" "+this.plateauDeJeu.getPersonnage(j).getNom());
 				}
@@ -180,29 +277,48 @@ public class Jeu {
 						System.out.println("Votre choix :");
 					}
 				} while (continu);
-			}
-		}
-		//les joueurs restants
-		for (int i=0;i<this.plateauDeJeu.getNombreJoueurs()-1;i++) {
-			boolean continu=true;
-			do {
-				try {
-					int choix=generateur.nextInt(7)+1;
-					for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
-						if(choix==this.plateauDeJeu.getPersonnage(j).getRang()) {
-							this.plateauDeJeu.getPersonnage(j).setJoueur(this.plateauDeJeu.getJoueur(i));
-							this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(j));
-							continu=false;
-						} else {
-							throw new Exception();
+			} else {
+				boolean continu=true;
+				do {
+					try {
+						int choix=generateur.nextInt(7)+1;
+						for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
+							if(choix==this.plateauDeJeu.getPersonnage(j).getRang()) {
+								this.plateauDeJeu.getPersonnage(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+								this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(j));
+								continu=false;
+							} else {
+								throw new Exception();
+							}
 						}
-					}
-				} catch (Exception e) {}
-			} while (continu);
+					} catch (Exception e) {}
+				} while (continu);
+			}
 		}
 	}
 	private void percevoirRessources() {
 		
+		System.out.println("Ques souhaitez vous faire ?");
+		System.out.println("1 Prendre deux pièces d'or");
+		System.out.println("2 piocher deux quartier et en garder un");
+		int choix=Interaction.lireUnEntier(1, 3);
+		if(choix==1) {
+			this.plateauDeJeu.getJoueur(choix).ajouterPieces(2);
+		} else if(choix==2) {
+			Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
+			System.out.println("1 "+quartier1.getNom()+" ,type: "+quartier1.getType()+" ,coût:"+quartier1.getCout());
+			Quartier quartier2=this.plateauDeJeu.getPioche().piocher();
+			System.out.println("2 "+quartier2.getNom()+" ,type: "+quartier2.getType()+" ,coût:"+quartier2.getCout());
+			System.out.println("Lequel gardez vous ?");
+			int garder=Interaction.lireUnEntier(1, 3);
+			if(garder==1){
+				this.plateauDeJeu.getJoueur(choix).ajouterQuartierDansMain(quartier1);
+				this.plateauDeJeu.getPioche().ajouter(quartier2);
+			} else if(garder==2) {
+				this.plateauDeJeu.getJoueur(choix).ajouterQuartierDansMain(quartier2);
+				this.plateauDeJeu.getPioche().ajouter(quartier1);
+			}
+		}
 	}
 	private void calculDesPoints() {
 		

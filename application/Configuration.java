@@ -34,8 +34,9 @@ public class Configuration {
 	public static PlateauDeJeu configurationDeBase(Pioche p) {
 		PlateauDeJeu plateau=new PlateauDeJeu();
 		//ajout des joueurs
-		for(int i=0;i<4;i++) {
-			plateau.ajouterJoueur(new Joueur("j"+i));
+		plateau.ajouterJoueur(new Joueur("Player1"));
+		for(int i=0;i<3;i++) {
+			plateau.ajouterJoueur(new Joueur("Bot"+i));
 		}
 		//ajout des personnages
 		plateau.ajouterPersonnage(new Assassin());
