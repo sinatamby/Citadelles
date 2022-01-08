@@ -108,6 +108,33 @@ public class Jeu {
 							System.out.println("Votre choix :");
 						}
 					} while (continu);
+					if(this.plateauDeJeu.getPersonnage(i).getCaracteristiques()==Caracteristiques.ARCHITECTE) {
+						for(int k=1;k<3;k++) {
+							System.out.println("Voulez vous construire un "+(k)+"eme quartier ?");
+							if (Interaction.lireOuiOuNon()) {
+								System.out.println("Quel quartier voulez vous construire ?");
+								for(int j=0;j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite();j++) {
+									System.out.println((i+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
+								}
+								continu=true;
+								do {
+									try {
+										int choix=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
+										if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+											throw new Exception();
+										} else {
+											this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
+											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+											this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
+										}
+									} catch (Exception e) {
+										System.out.println("Coût trop élevé");
+										System.out.println("Votre choix :");
+									}
+								} while (continu);
+							}
+						}
+					}
 				}
 			}
 		}
