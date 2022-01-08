@@ -10,10 +10,10 @@ public class TestPlateauDeJeu {
 
 	public static void main(String[] args) {
 		TestPlateauDeJeu testPlateau = new TestPlateauDeJeu();
-		testPlateau.test1();
-		testPlateau.test2();	
+		//testPlateau.test1();
+		//testPlateau.test2();	
 		testPlateau.test3();
-		testPlateau.test4();
+		//testPlateau.test4();
 	}
 	
 	public void test1() {
@@ -26,7 +26,7 @@ public class TestPlateauDeJeu {
 				"test de l'existance de la pioche");
 	}
 	public void test2() {
-		System.out.println("TEST DE L'AJOUT D'UN JOUEUR");
+		System.out.println("TEST DE L'AJOUT ET DU RETRAIT D'UN JOUEUR");
 		PlateauDeJeu plateau = new PlateauDeJeu();
 		Joueur joueur = new Joueur("Billy");
 		plateau.ajouterJoueur(joueur);
@@ -42,6 +42,9 @@ public class TestPlateauDeJeu {
 		Test.test(plateau.getNombrePersonnages()== 1,"nombre de joueurs");
 		Test.test(plateau.getPersonnage(0)== roi,
 				"récupération du personnage depuis le tableau");
+		plateau.retirerPersonnage(roi);
+		Test.test(plateau.getNombrePersonnages()==0,"nombre de joueurs");
+		Test.test(plateau.getPersonnage(0)==null, "vérification de la retraite du roi");
 	}
 	public void test4() {
 		System.out.println("TEST DE L'ASSOCIATION DU PLATEAU AU PERSONNAGE");

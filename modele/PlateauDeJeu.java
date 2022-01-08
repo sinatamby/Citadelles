@@ -61,7 +61,7 @@ public class PlateauDeJeu {
 		for(int i=0;i<this.nombrePersonnages;i++) {
 			if (this.listePersonnages[i]==personnage) {
 				this.listePersonnages[i]=null;
-				for (int j=0;j<this.listePersonnages.length;j++) {
+				for (int j=0;j<this.listePersonnages.length-1;j++) {
 					if (this.listePersonnages[j]==null&&this.listePersonnages[j+1]!=null) {
 						this.listePersonnages[j]=this.listePersonnages[j+1];
 					}

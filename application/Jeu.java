@@ -74,21 +74,15 @@ public class Jeu {
 	}
 	private void choixPersonnages() {
 		System.out.println("Choix des personnages :");
-		int faceCachee=generateur.nextInt(9);
+		int faceCachee=generateur.nextInt(this.plateauDeJeu.getNombrePersonnages());
+		this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(faceCachee));
 		System.out.println("Un personnage a été écarté face cachée.");
-		int faceVisible1=generateur.nextInt(9);
-		while (this.plateauDeJeu.getPersonnage(faceVisible1).getRang()==this.plateauDeJeu.getPersonnage(faceCachee).getRang()) {
-			faceVisible1=generateur.nextInt(9);
-		}
+		int faceVisible1=generateur.nextInt(this.plateauDeJeu.getNombrePersonnages());
+		this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(faceVisible1));
 		System.out.println("Le personnage \""+this.plateauDeJeu.getPersonnage(faceVisible1).getNom()+"\" est écarté face visible.");
-		int faceVisible2=generateur.nextInt(9);
-		while (this.plateauDeJeu.getPersonnage(faceVisible2).getRang()==this.plateauDeJeu.getPersonnage(faceCachee).getRang()&&this.plateauDeJeu.getPersonnage(faceVisible2).getRang()==this.plateauDeJeu.getPersonnage(faceVisible1).getRang()) {
-			faceVisible2=generateur.nextInt(9);
-		}
+		int faceVisible2=generateur.nextInt(this.plateauDeJeu.getNombrePersonnages());
+		this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(faceVisible2));
 		System.out.println("Le personnage \""+this.plateauDeJeu.getPersonnage(faceVisible2).getNom()+"\" est écarté face visible.");
-		
-		
-		
 	}
 	private void percevoirRessources() {
 		
