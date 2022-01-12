@@ -23,17 +23,21 @@ public class Jeu {
 		System.out.println("Bienvenue dans Citadelles !\n\n");
 		System.out.println("1- Jouer\n2- Règles\n3- Quitter");
 		int choix=0;
-		choix=Interaction.lireUnEntier(1,4);
-		if(choix==1) {
-			System.out.println("Démarrage de la partie");
-			jouerPartie();
-		} else if(choix==2) {
-			System.out.println("Voici les régles du jeu :");
-			afficherLesRegles();
-		} else if(choix==3) {
-			System.out.println("Vous quittez Citadelles, au revoir !");
-			partieFinie();
-		}
+		boolean continu=true;
+		do {
+			choix=Interaction.lireUnEntier(1,4);
+			if(choix==1) {
+				System.out.println("Démarrage de la partie");
+				jouerPartie();
+			} else if(choix==2) {
+				System.out.println("Voici les régles du jeu :");
+				afficherLesRegles();
+			} else if(choix==3) {
+				System.out.println("Vous quittez Citadelles, au revoir !");
+				continu=false;
+			}
+		} while (continu);
+		
 	}
 	private void afficherLesRegles() {
 		System.out.println("regles.pdf");
