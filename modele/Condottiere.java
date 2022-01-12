@@ -98,10 +98,55 @@ public class Condottiere extends Personnage{
 	}
 	public void utiliserPouvoirAvatar() {
 		Random rand=new Random();
-		int choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
-		while (this.getPlateau().getPersonnage(choixAlea).getRang()==8 || this.getPlateau().getPersonnage(choixAlea).getRang()==5) {
-			choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
+		int reponse=rand.nextInt(1);
+		if(reponse==1) {
+			boolean continu=true;
+			boolean possible=false;
+			int joueur=0;
+			do {
+				try {
+					joueur=rand.nextInt(this.getPlateau().getNombreJoueurs());
+					if(joueur==0) {
+						continu=false;
+					}
+					for(int i=0;i<this.getPlateau().getJoueur(joueur).nbQuartiersDansCite();i++) {
+						if(this.getPlateau().getJoueur(joueur).getQuartier(i).getCout()-1<=this.getJoueur().nbPieces()) {
+							possible=true;
+						}
+					}
+					if(possible==false){
+						throw new Exception();
+					} else if(this.getPlateau().getJoueur(joueur).getPersonnage().getRang()==8) {
+						throw new Exception();
+					} else if(this.getPlateau().getJoueur(joueur).getPersonnage().getRang()==5) {
+						throw new Exception();
+					} else {
+						continu=false;
+					}
+				} catch(Exception e) {}
+			} while(continu);
+			if(joueur==0) {
+				System.out.println("Le joueur ne fait rien.");
+			} else {
+				continu=true;
+				int quartier=0;
+				do {
+					try {
+						quartier=rand.nextInt(this.getPlateau().getJoueur(joueur).nbQuartiersDansCite());
+						if(quartier>this.getPlateau().getJoueur(joueur).nbQuartiersDansCite()) {
+							throw new Exception();
+						} else if(this.getPlateau().getJoueur(joueur).getQuartier(quartier).getCout()-1>this.getJoueur().nbPieces()) {
+							throw new Exception();
+						} else {
+							continu=false;
+						}
+					} catch(Exception e) {}
+				} while(continu);
+				System.out.println("Le quartier \""+this.getPlateau().getJoueur(joueur).getQuartier(quartier).getNom()+"\" de "+this.getPlateau().getJoueur(joueur).getNom()+" a été supprimé");
+				this.getPlateau().getJoueur(joueur).retirerQuartierDansCite(this.getPlateau().getJoueur(joueur).getQuartier(quartier).getNom());
+			}
+		} else {
+		System.out.println("Le joueur n'utilise pas son pouvoir.");
 		}
-		
 	}
 }
