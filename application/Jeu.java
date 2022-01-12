@@ -1,6 +1,5 @@
 package application;
 
-import java.util.Iterator;
 import java.util.Random;
 import controleur.Interaction;
 import modele.*;
@@ -10,11 +9,14 @@ public class Jeu {
 	private PlateauDeJeu plateauDeJeu;
 	private int numeroConfiguration;
 	private Random generateur=new Random();
+	private boolean citeCompletePremier;
+	private String nomJoueurCiteCompletePremier;
 	//constructeur
 	public Jeu(){
-		plateauDeJeu=new PlateauDeJeu();
-		numeroConfiguration=0;
-		generateur=new Random();
+		this.plateauDeJeu=new PlateauDeJeu();
+		this.numeroConfiguration=0;
+		this.generateur=new Random();
+		this.citeCompletePremier=false;
 	}
 	//méthodes
 	public void jouer() {
@@ -38,13 +40,13 @@ public class Jeu {
 	}
 	private void jouerPartie() {
 		initialisation();
-		int i=0;
-		if (this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()<=7) {
+		partieFinie();
+		if (!partieFinie()) {
 			tourDeJeu();
 			gestionCouronne();
 			reinitialisationPersonnages();
+			partieFinie();
 		}
-		partieFinie();
 		calculDesPoints();
 	}
 	private void initialisation() {
@@ -85,7 +87,7 @@ public class Jeu {
 	private boolean partieFinie() {
 		boolean retour=false;
 		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
-			if (this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()==8) {
+			if (this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()>=7) {
 				retour=true;
 			}
 		}
@@ -160,6 +162,10 @@ public class Jeu {
 									} while (continu);
 								}
 							}
+						}
+						if (this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite()>=7 && !this.citeCompletePremier) {
+							this.citeCompletePremier=true;
+							this.nomJoueurCiteCompletePremier=this.plateauDeJeu.getPersonnage(i).getJoueur().getNom();
 						}
 					}
 				} else {
@@ -357,6 +363,7 @@ public class Jeu {
 		}
 	}
 	private void calculDesPoints() {
+		System.out.println("Scores finaux :");
 		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
 			int totalCout=0;
 			boolean rel=false,mil=false,nob=false,com=false,mer=false;
@@ -378,7 +385,12 @@ public class Jeu {
 			if (rel&&mil&&nob&&com&&mer) {
 				totalCout=totalCout+3;
 			}
-			
+			if (this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()>=7 && this.nomJoueurCiteCompletePremier==this.plateauDeJeu.getJoueur(i).getNom()) {
+				totalCout=totalCout+4;
+			} else if(this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()>=7) {
+				totalCout=totalCout+2;
+			}
+			System.out.println("Score du joueur "+this.plateauDeJeu.getJoueur(i).getNom()+" : "+totalCout+" pts");
 		}
 	}
 }
