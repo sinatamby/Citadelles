@@ -210,6 +210,10 @@ public class Jeu {
 								}
 							}
 						}
+						if (this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite()>=7 && !this.citeCompletePremier) {
+							this.citeCompletePremier=true;
+							this.nomJoueurCiteCompletePremier=this.plateauDeJeu.getPersonnage(i).getJoueur().getNom();
+						}
 					}
 				}
 			}
