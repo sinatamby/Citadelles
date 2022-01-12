@@ -378,15 +378,15 @@ public class Jeu {
 			Quartier[] citeJoueur=this.plateauDeJeu.getJoueur(i).getCite();
 			for(int j=0;j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite();j++) {
 				totalCout=totalCout+citeJoueur[j].getCout();
-				if 		 (citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[1]) {
+				if 		 (citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[0]) {
 					rel=true;
-				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[2]) {
+				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[1]) {
 					mil=true;
-				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[3]) {
+				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[2]) {
 					nob=true;
-				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[4]) {
+				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[3]) {
 					com=true;
-				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[5]) {
+				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[4]) {
 					mer=true;
 				}
 			}
