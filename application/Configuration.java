@@ -28,7 +28,6 @@ public class Configuration {
 			pioche.ajouter(new Quartier("Forteresse",Quartier.TYPE_QUARTIERS[1],5));
 			pioche.ajouter(new Quartier("Cathédrale",Quartier.TYPE_QUARTIERS[0],5));
 		}
-		pioche.melanger();
 		return pioche;
 	}
 	public static PlateauDeJeu configurationDeBase(Pioche p) {
