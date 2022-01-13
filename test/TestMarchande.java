@@ -10,7 +10,8 @@ public class TestMarchande {
 	public static void main(String[] args) {
 		TestMarchande test= new TestMarchande();
 		//test.test1();
-		test.test2();	
+		//test.test2();
+		test.test3();
 	}
 	
 	public void test1(){
@@ -25,6 +26,28 @@ public class TestMarchande {
 		Test.test(Marchande.getVole()==false, "test de l'initialisation de la variable \"vole\"");
 	}
 	public void test2(){
+		System.out.println("TEST DE LA PERCEPTION DE RESSOURCES SPECIFIQUES ET DE L'UTILISATEUR DU POUVOIR");
+		Joueur joueur = new Joueur("Billy");
+		Marchande marchande = new Marchande();
+		Quartier quartier1 = new Quartier("taverne",Quartier.TYPE_QUARTIERS[3],1);
+		Quartier quartier2 = new Quartier("prison",Quartier.TYPE_QUARTIERS[1],2);
+		Quartier quartier3 = new Quartier("échoppe",Quartier.TYPE_QUARTIERS[3],2);
+		marchande.setJoueur(joueur);
+		marchande.ajouterPieces();
+		Test.test(marchande.getJoueur().nbPieces() == 2,
+			"test du nombre de pièces d'or avant perception");
+		marchande.construire(quartier1);
+		marchande.construire(quartier2);
+		marchande.construire(quartier3);		
+		marchande.percevoirRessourcesSpecifiques();
+		Test.test(marchande.getJoueur().nbPieces() == 4,
+			"test du nombre de pièces d'or après perception de ressources spécifiques avec 2 quartiers commerçants");
+		marchande.utiliserPouvoir();
+		Test.test(marchande.getJoueur().nbPieces() == 5,
+				"test du nombre de pièces d'or après utilisation du pouvoir");
+			
+	}
+	public void test3(){
 		System.out.println("TEST DE LA PERCEPTION DE RESSOURCES SPECIFIQUES ET DE L'UTILISATEUR DU POUVOIR");
 		Joueur joueur = new Joueur("Billy");
 		Marchande marchande = new Marchande();

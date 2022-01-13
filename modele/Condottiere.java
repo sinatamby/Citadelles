@@ -98,27 +98,27 @@ public class Condottiere extends Personnage{
 	}
 	public void utiliserPouvoirAvatar() {
 		Random rand=new Random();
-		int reponse=rand.nextInt(1);
+		int reponse=rand.nextInt(2);
 		if(reponse==1) {
 			boolean continu=true;
 			boolean possible=false;
 			int joueur=0;
 			do {
 				try {
-					joueur=rand.nextInt(this.getPlateau().getNombreJoueurs());
+					joueur=rand.nextInt(this.getPlateau().getNombreJoueurs()+1);
 					if(joueur==0) {
 						continu=false;
 					}
-					for(int i=0;i<this.getPlateau().getJoueur(joueur).nbQuartiersDansCite();i++) {
-						if(this.getPlateau().getJoueur(joueur).getQuartier(i).getCout()-1<=this.getJoueur().nbPieces()) {
+					for(int i=0;i<this.getPlateau().getJoueur(joueur-1).nbQuartiersDansCite();i++) {
+						if(this.getPlateau().getJoueur(joueur-1).getQuartier(i).getCout()-1<=this.getJoueur().nbPieces()) {
 							possible=true;
 						}
 					}
 					if(possible==false){
 						throw new Exception();
-					} else if(this.getPlateau().getJoueur(joueur).getPersonnage().getRang()==8) {
+					} else if(this.getPlateau().getJoueur(joueur-1).getPersonnage().getRang()==8) {
 						throw new Exception();
-					} else if(this.getPlateau().getJoueur(joueur).getPersonnage().getRang()==5) {
+					} else if(this.getPlateau().getJoueur(joueur-1).getPersonnage().getRang()==5) {
 						throw new Exception();
 					} else {
 						continu=false;
@@ -132,20 +132,20 @@ public class Condottiere extends Personnage{
 				int quartier=0;
 				do {
 					try {
-						quartier=rand.nextInt(this.getPlateau().getJoueur(joueur).nbQuartiersDansCite());
-						if(quartier>this.getPlateau().getJoueur(joueur).nbQuartiersDansCite()) {
+						quartier=rand.nextInt(this.getPlateau().getJoueur(joueur-1).nbQuartiersDansCite());
+						if(quartier>this.getPlateau().getJoueur(joueur-1).nbQuartiersDansCite()) {
 							throw new Exception();
-						} else if(this.getPlateau().getJoueur(joueur).getQuartier(quartier).getCout()-1>this.getJoueur().nbPieces()) {
+						} else if(this.getPlateau().getJoueur(joueur-1).getQuartier(quartier-1).getCout()-1>this.getJoueur().nbPieces()) {
 							throw new Exception();
 						} else {
 							continu=false;
 						}
 					} catch(Exception e) {}
 				} while(continu);
-				System.out.println("Le quartier \""+this.getPlateau().getJoueur(joueur).getQuartier(quartier).getNom()+"\" de "+this.getPlateau().getJoueur(joueur).getNom()+" a été supprimé");
-				this.getPlateau().getJoueur(joueur).retirerQuartierDansCite(this.getPlateau().getJoueur(joueur).getQuartier(quartier).getNom());
+				System.out.println("Le quartier \""+this.getPlateau().getJoueur(joueur-1).getQuartier(quartier-1).getNom()+"\" de "+this.getPlateau().getJoueur(joueur-1).getNom()+" a été supprimé");
+				this.getPlateau().getJoueur(joueur-1).retirerQuartierDansCite(this.getPlateau().getJoueur(joueur-1).getQuartier(quartier-1).getNom());
 			}
-		} else {
+		} else if(reponse==0){
 		System.out.println("Le joueur n'utilise pas son pouvoir.");
 		}
 	}

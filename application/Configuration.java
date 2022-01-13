@@ -35,9 +35,9 @@ public class Configuration {
 		PlateauDeJeu plateau=new PlateauDeJeu();
 		//ajout des joueurs
 		plateau.ajouterJoueur(new Joueur("Player1"));
-		for(int i=0;i<3;i++) {
-			plateau.ajouterJoueur(new Joueur("Bot"+i));
-		}
+		plateau.ajouterJoueur(new Joueur("Bot1"));
+		plateau.ajouterJoueur(new Joueur("Bot2"));
+		plateau.ajouterJoueur(new Joueur("Bot3"));
 		//ajout des personnages
 		plateau.ajouterPersonnage(new Assassin());
 		plateau.ajouterPersonnage(new Voleur());
@@ -63,6 +63,7 @@ public class Configuration {
 		p.ajouter(new Quartier("Trésor Impérial",Quartier.TYPE_QUARTIERS[4],5,""));
 		p.ajouter(new Quartier("Tripot",Quartier.TYPE_QUARTIERS[4],6,""));
 		p.melanger();
+		plateau.setPioche(p);
 		return plateau;
 	}
 }

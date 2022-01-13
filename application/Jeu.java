@@ -1,5 +1,6 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.Random;
 import controleur.Interaction;
 import modele.*;
@@ -21,10 +22,10 @@ public class Jeu {
 	//méthodes
 	public void jouer() {
 		System.out.println("Bienvenue dans Citadelles !\n\n");
-		System.out.println("1- Jouer\n2- Règles\n3- Quitter");
 		int choix=0;
 		boolean continu=true;
 		do {
+			System.out.println("1- Jouer\n2- Règles\n3- Quitter");
 			choix=Interaction.lireUnEntier(1,4);
 			if(choix==1) {
 				System.out.println("Démarrage de la partie");
@@ -54,7 +55,7 @@ public class Jeu {
 		calculDesPoints();
 	}
 	private void initialisation() {
-		Configuration.configurationDeBase(Configuration.nouvellePioche());
+		this.plateauDeJeu=Configuration.configurationDeBase(Configuration.nouvellePioche());
 		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
 			this.plateauDeJeu.getJoueur(i).ajouterPieces(2);
 			for (int j=0;j<4;j++) {
@@ -63,16 +64,12 @@ public class Jeu {
 			this.plateauDeJeu.getPioche().melanger();
 		}
 		int joueur=generateur.nextInt(3);
-		this.plateauDeJeu.getJoueur(joueur).getPossedeCouronne();
+		this.plateauDeJeu.getJoueur(joueur).setPossedeCouronne(true);
 	}
 	private void gestionCouronne() {
 		for(int i=0;i<this.plateauDeJeu.getNombrePersonnages();i++) {
 			if (this.plateauDeJeu.getPersonnage(i).getCaracteristiques()==Caracteristiques.ROI) {
-				for(int j=0;j<this.plateauDeJeu.getNombreJoueurs();j++) {
-					if (this.plateauDeJeu.getJoueur(j).getPersonnage().getCaracteristiques()==Caracteristiques.ROI) {
-						this.plateauDeJeu.getJoueur(j).setPossedeCouronne(true);
-					}
-				}
+				this.plateauDeJeu.getPersonnage(i).getJoueur().setPossedeCouronne(true);
 			} else {
 				for(int j=0;j<this.plateauDeJeu.getNombreJoueurs();j++) {
 					if (this.plateauDeJeu.getJoueur(j).getPossedeCouronne()) {
@@ -228,33 +225,37 @@ public class Jeu {
 	}
 	private void choixPersonnages() {
 		//élimination de certain personnages (partie qui change si nombre de joueurs change --> NON IMPLÉMENTÉ)
+		ArrayList<Personnage> copiePersos=new ArrayList<Personnage>();
+		for (int i = 0; i < this.plateauDeJeu.getNombrePersonnages(); i++) {
+			copiePersos.add(this.plateauDeJeu.getPersonnage(i));
+		}
 		System.out.println("Choix des personnages :");
-		int faceCachee=generateur.nextInt(this.plateauDeJeu.getNombrePersonnages());
+		int faceCachee=generateur.nextInt(copiePersos.size());
 		System.out.println("Un personnage a été écarté face cachée.");
-		this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(faceCachee));
-		int faceVisible1=generateur.nextInt(this.plateauDeJeu.getNombrePersonnages());
-		System.out.println("Le personnage \""+this.plateauDeJeu.getPersonnage(faceVisible1).getNom()+"\" est écarté face visible.");
-		this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(faceVisible1));
-		int faceVisible2=generateur.nextInt(this.plateauDeJeu.getNombrePersonnages());
-		System.out.println("Le personnage \""+this.plateauDeJeu.getPersonnage(faceVisible2).getNom()+"\" est écarté face visible.");
-		this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(faceVisible2));
+		copiePersos.remove(faceCachee);
+		int faceVisible1=generateur.nextInt(copiePersos.size());
+		System.out.println("Le personnage \""+copiePersos.get(faceVisible1).getNom()+"\" est écarté face visible.");
+		copiePersos.remove(faceVisible1);
+		int faceVisible2=generateur.nextInt(copiePersos.size());
+		System.out.println("Le personnage \""+copiePersos.get(faceVisible2).getNom()+"\" est écarté face visible.");
+		copiePersos.remove(faceVisible2);
 		//joueur qui possède la couronne
 		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
 			if (this.plateauDeJeu.getJoueur(i).getPossedeCouronne()) {
-				System.out.println("Vous avez la couronne !");
-				if(this.plateauDeJeu.getJoueur(i).getNom()=="Player1") {
-					for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
-						System.out.println(this.plateauDeJeu.getPersonnage(j).getRang()+" "+this.plateauDeJeu.getPersonnage(j).getNom());
+				if(this.plateauDeJeu.getJoueur(0).getPossedeCouronne()) {
+					System.out.println(this.plateauDeJeu.getJoueur(i).getNom()+" a la couronne !");
+					for (int j=0;j<copiePersos.size();j++) {
+						System.out.println(copiePersos.get(j).getRang()+" "+copiePersos.get(j).getNom());
 					}
 					System.out.println("Choisissez votre personnage");
 					boolean continu=true;
 					do {
 						try {
 							int choix=Interaction.lireUnEntier(1, 9);
-							for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
-								if(choix==this.plateauDeJeu.getPersonnage(j).getRang()) {
-									this.plateauDeJeu.getPersonnage(j).setJoueur(this.plateauDeJeu.getJoueur(i));
-									this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(j));
+							for (int j=0;j<copiePersos.size();j++) {
+								if(choix==copiePersos.get(j).getRang()) {
+									copiePersos.get(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+									copiePersos.remove(j);
 									continu=false;
 								} else {
 									throw new Exception();
@@ -270,10 +271,11 @@ public class Jeu {
 					do {
 						try {
 							int choix=generateur.nextInt(7)+1;
-							for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
-								if(choix==this.plateauDeJeu.getPersonnage(j).getRang()) {
-									this.plateauDeJeu.getPersonnage(j).setJoueur(this.plateauDeJeu.getJoueur(i));
-									this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(j));
+							for (int j=0;j<copiePersos.size();j++) {
+								if(choix==copiePersos.get(j).getRang()) {
+									copiePersos.get(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+									copiePersos.remove(j);
+									System.out.println("Le joueur "+this.plateauDeJeu.getJoueur(i).getNom()+" a choisi son perso");
 									continu=false;
 								} else {
 									throw new Exception();
@@ -287,19 +289,19 @@ public class Jeu {
 		}
 		//les joueurs restants
 		for (int i=0;i<this.plateauDeJeu.getNombreJoueurs()-1;i++) {
-			if(this.plateauDeJeu.getJoueur(i).getNom()=="Player1") {
-				for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
-					System.out.println(this.plateauDeJeu.getPersonnage(j).getRang()+" "+this.plateauDeJeu.getPersonnage(j).getNom());
+			if(this.plateauDeJeu.getJoueur(0).getNom()=="Player1") {
+				for (int j=0;j<copiePersos.size();j++) {
+					System.out.println(copiePersos.get(j).getRang()+" "+copiePersos.get(j).getNom());
 				}
 				System.out.println("Choisissez votre personnage");
 				boolean continu=true;
 				do {
 					try {
 						int choix=Interaction.lireUnEntier(1, 9);
-						for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
-							if(choix==this.plateauDeJeu.getPersonnage(j).getRang()) {
-								this.plateauDeJeu.getPersonnage(j).setJoueur(this.plateauDeJeu.getJoueur(i));
-								this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(j));
+						for (int j=0;j<copiePersos.size();j++) {
+							if(choix==copiePersos.get(j).getRang()) {
+								copiePersos.get(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+								copiePersos.remove(j);
 								continu=false;
 							} else {
 								throw new Exception();
@@ -315,10 +317,10 @@ public class Jeu {
 				do {
 					try {
 						int choix=generateur.nextInt(7)+1;
-						for (int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
-							if(choix==this.plateauDeJeu.getPersonnage(j).getRang()) {
-								this.plateauDeJeu.getPersonnage(j).setJoueur(this.plateauDeJeu.getJoueur(i));
-								this.plateauDeJeu.retirerPersonnage(this.plateauDeJeu.getPersonnage(j));
+						for (int j=0;j<copiePersos.size();j++) {
+							if(choix==copiePersos.get(j).getRang()) {
+								copiePersos.get(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+								copiePersos.remove(j);
 								continu=false;
 							} else {
 								throw new Exception();

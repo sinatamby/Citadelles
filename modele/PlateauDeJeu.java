@@ -24,6 +24,9 @@ public class PlateauDeJeu {
 	public Pioche getPioche() {
 		return this.pioche;
 	}
+	public void setPioche(Pioche p) {
+		this.pioche=p;
+	}
 	public Personnage getPersonnage(int i) {
 		Personnage retour;
 		if(i>=0 && i<getNombrePersonnages()) {
@@ -55,19 +58,5 @@ public class PlateauDeJeu {
 			this.listeJoueurs[this.nombreJoueurs]=joueur;
 			this.nombreJoueurs++;
 		}
-	}
-	//ajout d'une méthode pour enlever des personnages (mettre de côté), et enlever les espaces dans le tableau personnage.
-	public void retirerPersonnage(Personnage personnage) {
-		for(int i=0;i<this.nombrePersonnages;i++) {
-			if (this.listePersonnages[i]==personnage) {
-				this.listePersonnages[i]=null;
-				for (int j=0;j<this.listePersonnages.length-1;j++) {
-					if (this.listePersonnages[j]==null&&this.listePersonnages[j+1]!=null) {
-						this.listePersonnages[j]=this.listePersonnages[j+1];
-					}
-				}
-			}
-		}
-		this.nombrePersonnages--;
 	}
 }

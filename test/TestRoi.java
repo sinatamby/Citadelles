@@ -19,6 +19,7 @@ public class TestRoi {
 		//testRoi.test8();
 		//testRoi.test9();
 		//testRoi.test10();
+		testRoi.test11();
 	}
 	
 	public void test1(){
@@ -143,5 +144,17 @@ public class TestRoi {
 		Test.test(roi.getJoueur() == null, "test du joueur non attribué");
 		Test.test(roi.getAssassine() == false, "test de l'assassinat du personnage");
 		Test.test(roi.getVole() == false, "test du vol du personnage");
+	}
+	public void test11(){
+		System.out.println("TEST DE L'UTILISATION DU POUVOIR DU ROI");
+		Joueur joueur = new Joueur("Billy");
+		Roi roi = new Roi();
+		roi.utiliserPouvoirAvatar();
+		Test.test(roi.getJoueur() == null,
+				"test alors que le joueur n'est pas attribué");
+		roi.setJoueur(joueur);
+		Test.test(roi.getJoueur().getPossedeCouronne() == false, "test avant utilisation");
+		roi.utiliserPouvoirAvatar();
+		Test.test(roi.getJoueur().getPossedeCouronne() == true, "test après utilisation");
 	}
 }
