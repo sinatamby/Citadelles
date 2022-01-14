@@ -103,8 +103,10 @@ public class Jeu {
 			if (this.plateauDeJeu.getPersonnage(i).getVole()) {
 				System.out.println("le personnage "+this.plateauDeJeu.getPersonnage(i).getNom()+" a été volé");
 				for(int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
-					if(this.plateauDeJeu.getPersonnage(j).getCaracteristiques()==Caracteristiques.VOLEUR) {
+					if(this.plateauDeJeu.getPersonnage(j).getCaracteristiques()==Caracteristiques.VOLEUR && this.plateauDeJeu.getPersonnage(i).getJoueur()!=null) {
 						this.plateauDeJeu.getPersonnage(j).getJoueur().ajouterPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
+					} else {
+						System.out.println("Le personnage n'est pas attribué, le voleur ne reçoit pas de pièces");
 					}
 				}
 				this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces());
@@ -357,11 +359,12 @@ public class Jeu {
 	private void percevoirRessources(int perso) {
 		if(this.plateauDeJeu.getPersonnage(perso).getJoueur()!=null && this.plateauDeJeu.getPersonnage(perso).getJoueur().getNom()=="Player1") {
 			System.out.println("Ques souhaitez vous faire ?");
-			System.out.println("1 Prendre deux pièces d'or");
-			System.out.println("2 piocher deux quartier et en garder un");
+			System.out.println("1 Prendre deux pièces d'or (vous en avez "+this.plateauDeJeu.getPersonnage(perso).getJoueur().nbPieces()+" dans votre trésor)");
+			System.out.println("2 piocher deux quartier et en garder un (vous en avez "+this.plateauDeJeu.getPersonnage(perso).getJoueur().nbQuartiersDansMain()+" dans votre main et "+this.plateauDeJeu.getPersonnage(perso).getJoueur().nbQuartiersDansCite()+" dans votre cité)");
 			int choix=Interaction.lireUnEntier(1, 3);
 			if(choix==1) {
 				this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterPieces(2);
+				System.out.println("Vous avez maintenant "+this.plateauDeJeu.getPersonnage(perso).getJoueur().nbPieces()+" pièces dans votre trésor.");
 			} else if(choix==2) {
 				Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
 				System.out.println("1 "+quartier1.getNom()+" ,type: "+quartier1.getType()+" ,coût:"+quartier1.getCout());
@@ -380,8 +383,10 @@ public class Jeu {
 		} else if(this.plateauDeJeu.getPersonnage(perso).getJoueur()!=null) {
 			int choix=generateur.nextInt(1);
 			if(choix==0) {
+				System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(perso).getJoueur().getNom()+" prends 2 pièces.");
 				this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterPieces(2);
 			} else if(choix==1) {
+				System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(perso).getJoueur().getNom()+" prends 1 quartier.");
 				Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
 				Quartier quartier2=this.plateauDeJeu.getPioche().piocher();
 				int garder=generateur.nextInt(1);
