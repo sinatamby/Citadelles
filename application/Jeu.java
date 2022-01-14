@@ -30,6 +30,7 @@ public class Jeu {
 			if(choix==1) {
 				System.out.println("Démarrage de la partie");
 				jouerPartie();
+				System.out.println("");
 			} else if(choix==2) {
 				System.out.println("Voici les régles du jeu :");
 				afficherLesRegles();
@@ -46,7 +47,7 @@ public class Jeu {
 	private void jouerPartie() {
 		initialisation();
 		partieFinie();
-		if (!partieFinie()) {
+		while(!partieFinie()) {
 			tourDeJeu();
 			gestionCouronne();
 			reinitialisationPersonnages();
@@ -69,9 +70,9 @@ public class Jeu {
 		this.plateauDeJeu.getJoueur(joueur).setPossedeCouronne(true);
 	}
 	private void gestionCouronne() {
-		for(int i=0;i<this.plateauDeJeu.getNombrePersonnages();i++) {
-			if (this.plateauDeJeu.getPersonnage(i).getCaracteristiques()==Caracteristiques.ROI) {
-				this.plateauDeJeu.getPersonnage(i).getJoueur().setPossedeCouronne(true);
+		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
+			if (this.plateauDeJeu.getJoueur(i).getPersonnage().getCaracteristiques()==Caracteristiques.ROI) {
+				this.plateauDeJeu.getJoueur(i).setPossedeCouronne(true);
 			} else {
 				for(int j=0;j<this.plateauDeJeu.getNombreJoueurs();j++) {
 					if (this.plateauDeJeu.getJoueur(j).getPossedeCouronne()) {
@@ -80,7 +81,6 @@ public class Jeu {
 				}
 			}
 		}
-		
 	}
 	private void reinitialisationPersonnages() {
 		for(int i=0;i<this.plateauDeJeu.getNombrePersonnages();i++) {
@@ -99,7 +99,7 @@ public class Jeu {
 	private void tourDeJeu() {
 		choixPersonnages();
 		for(int i=0;i<this.plateauDeJeu.getNombrePersonnages();i++) {
-			System.out.println("C'est au tour du personnage de rang "+this.plateauDeJeu.getPersonnage(i).getRang());
+			System.out.println("C'est au tour du personnage de rang "+this.plateauDeJeu.getPersonnage(i).getRang()+" : "+this.plateauDeJeu.getPersonnage(i).getNom());
 			if (this.plateauDeJeu.getPersonnage(i).getVole()) {
 				System.out.println("le personnage "+this.plateauDeJeu.getPersonnage(i).getNom()+" a été volé");
 				for(int j=0;j<this.plateauDeJeu.getNombrePersonnages();j++) {
@@ -112,17 +112,17 @@ public class Jeu {
 			if (this.plateauDeJeu.getPersonnage(i).getAssassine()) {
 				System.out.println("Personnage assassiné, le tour passe");
 			} else {
-				if(this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()=="Player1") {
+				if(this.plateauDeJeu.getPersonnage(i).getJoueur()!=null && this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()=="Player1") {
 					percevoirRessources(i);
 					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
-					System.out.println("Voulez utiliser votre pouvoir ?");
+					System.out.println("Voulez vous utiliser votre pouvoir ?");
 					if(Interaction.lireOuiOuNon()) {
 						this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
 					}
 					System.out.println("Voulez vous construire ?");
 					if(Interaction.lireOuiOuNon()) {
 						System.out.println("Quel quartier voulez vous construire ?");
-						for(int j=0;j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite();j++) {
+						for(int j=0;j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain();j++) {
 							System.out.println((j+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
 						}
 						boolean continu=true;
@@ -133,6 +133,7 @@ public class Jeu {
 									throw new Exception();
 								} else {
 									this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
+									System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom());
 									this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
 									this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
 								}
@@ -157,6 +158,7 @@ public class Jeu {
 												throw new Exception();
 											} else {
 												this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
+												System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom());
 												this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
 												this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
 											}
@@ -173,12 +175,15 @@ public class Jeu {
 							this.nomJoueurCiteCompletePremier=this.plateauDeJeu.getPersonnage(i).getJoueur().getNom();
 						}
 					}
-				} else {
+				} else if(this.plateauDeJeu.getPersonnage(i).getJoueur()!=null) {
 					percevoirRessources(i);
 					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
 					int rand=generateur.nextInt(1);
 					if(rand==1) {
+						System.out.println("Le personnage utilise son pouvoir");
 						this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
+					} else {
+						System.out.println("Le personnage n'utilise pas son pouvoir");
 					}
 					rand=generateur.nextInt(1);
 					if(rand==1) {
@@ -190,6 +195,7 @@ public class Jeu {
 									throw new Exception();
 								} else {
 									this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
+									System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()+" dans sa cité.");
 									this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
 									this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
 								}
@@ -207,11 +213,14 @@ public class Jeu {
 												throw new Exception();
 											} else {
 												this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
+												System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom());
 												this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
 												this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
 											}
 										} catch (Exception e) {}
 									} while (continu);
+								} else {
+									System.out.println("L'Architecte ne construit pas de quartier");
 								}
 							}
 						}
@@ -219,13 +228,12 @@ public class Jeu {
 							this.citeCompletePremier=true;
 							this.nomJoueurCiteCompletePremier=this.plateauDeJeu.getPersonnage(i).getJoueur().getNom();
 						}
+					} else {
+						System.out.println("Le personnage ne construit pas de quartier");
 					}
 				}
 			}
 		}
-		
-		
-		
 	}
 	private void choixPersonnages() {
 		//élimination de certain personnages (partie qui change si nombre de joueurs change --> NON IMPLÉMENTÉ)
@@ -234,15 +242,15 @@ public class Jeu {
 			copiePersos.add(this.plateauDeJeu.getPersonnage(i));
 		}
 		System.out.println("Choix des personnages :");
-		int faceCachee=generateur.nextInt(copiePersos.size());
+		int faceCachee=generateur.nextInt(copiePersos.size())+1;
 		System.out.println("Un personnage a été écarté face cachée.");
-		copiePersos.remove(faceCachee);
-		int faceVisible1=generateur.nextInt(copiePersos.size());
-		System.out.println("Le personnage \""+copiePersos.get(faceVisible1).getNom()+"\" est écarté face visible.");
-		copiePersos.remove(faceVisible1);
-		int faceVisible2=generateur.nextInt(copiePersos.size());
-		System.out.println("Le personnage \""+copiePersos.get(faceVisible2).getNom()+"\" est écarté face visible.");
-		copiePersos.remove(faceVisible2);
+		copiePersos.remove(faceCachee-1);
+		int faceVisible1=generateur.nextInt(copiePersos.size())+1;
+		System.out.println("Le personnage \""+copiePersos.get(faceVisible1-1).getNom()+"\" est écarté face visible.");
+		copiePersos.remove(faceVisible1-1);
+		int faceVisible2=generateur.nextInt(copiePersos.size())+1;
+		System.out.println("Le personnage \""+copiePersos.get(faceVisible2-1).getNom()+"\" est écarté face visible.");
+		copiePersos.remove(faceVisible2-1);
 		//joueur qui possède la couronne
 		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
 			if (this.plateauDeJeu.getJoueur(i).getPossedeCouronne()) {
@@ -254,41 +262,43 @@ public class Jeu {
 					System.out.println("Choisissez votre personnage");
 					boolean continu=true;
 					do {
-						try {
-							int choix=Interaction.lireUnEntier(1, 9);
+						int choix=Interaction.lireUnEntier(1, 9);
+						if(choix==faceCachee||choix==faceVisible1||choix==faceVisible2) {
+							System.out.println("Ce personnage n'est pas disponible.");
+							System.out.println("Votre choix :");
+						} else {
 							for (int j=0;j<copiePersos.size();j++) {
-								if(choix==copiePersos.get(j).getRang()) {
-									copiePersos.get(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+								if(choix==copiePersos.get(j).getRang() && continu) {
+									for (int j2 = 0; j2 < this.plateauDeJeu.getNombrePersonnages(); j2++) {
+										if (copiePersos.get(j).getRang()==this.plateauDeJeu.getPersonnage(j2).getRang()) {
+											this.plateauDeJeu.getPersonnage(j2).setJoueur(this.plateauDeJeu.getJoueur(i));
+										}
+									}
 									copiePersos.remove(j);
 									continu=false;
 								}
-								
 							}
-							if(continu) {
-								throw new Exception();
-							}
-						} catch (Exception e) {
-							System.out.println("Ce personnage n'est pas disponible.");
-							System.out.println("Votre choix :");
 						}
 					} while (continu);
 				} else {
 					boolean continu=true;
 					do {
-						try {
-							int choix=generateur.nextInt(7)+1;
+						int choix=generateur.nextInt(7)+1;
+						if(choix==faceCachee||choix==faceVisible1||choix==faceVisible2) {
+						} else {
 							for (int j=0;j<copiePersos.size();j++) {
-								if(choix==copiePersos.get(j).getRang()) {
-									copiePersos.get(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+								if(choix==copiePersos.get(j).getRang() && continu) {
+									for (int j2 = 0; j2 < this.plateauDeJeu.getNombrePersonnages(); j2++) {
+										if (copiePersos.get(j).getRang()==this.plateauDeJeu.getPersonnage(j2).getRang()) {
+											this.plateauDeJeu.getPersonnage(j2).setJoueur(this.plateauDeJeu.getJoueur(i));
+										}
+									}
 									copiePersos.remove(j);
-									System.out.println("Le joueur "+this.plateauDeJeu.getJoueur(i).getNom()+" a choisi son perso");
+									System.out.println("Le joueur "+this.plateauDeJeu.getJoueur(i).getNom()+" a choisi son personnage");
 									continu=false;
 								}
 							}
-							if(continu) {
-								throw new Exception();
-							}
-						} catch (Exception e) {}
+						}
 					} while (continu);
 				}
 				
@@ -303,47 +313,49 @@ public class Jeu {
 				System.out.println("Choisissez votre personnage");
 				boolean continu=true;
 				do {
-					try {
-						int choix=Interaction.lireUnEntier(1, 9);
+					int choix=Interaction.lireUnEntier(1, 9);
+					if(choix==faceCachee||choix==faceVisible1||choix==faceVisible2) {
+						System.out.println("Ce personnage n'est pas disponible.");
+						System.out.println("Votre choix :");
+					} else {
 						for (int j=0;j<copiePersos.size();j++) {
-							if(choix==copiePersos.get(j).getRang()) {
-								System.out.println(choix+" --> "+copiePersos.get(j).getRang());
-								copiePersos.get(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+							if(choix==copiePersos.get(j).getRang() && continu) {
+								for (int j2 = 0; j2 < this.plateauDeJeu.getNombrePersonnages(); j2++) {
+									if (copiePersos.get(j).getRang()==this.plateauDeJeu.getPersonnage(j2).getRang()) {
+										this.plateauDeJeu.getPersonnage(j2).setJoueur(this.plateauDeJeu.getJoueur(i));
+									}
+								}
 								copiePersos.remove(j);
 								continu=false;
 							}
 						}
-						if(continu) {
-							throw new Exception();
-						}
-					} catch (Exception e) {
-						System.out.println("Ce personnage n'est pas disponible.");
-						System.out.println("Votre choix :");
 					}
 				} while (continu);
 			} else if(!this.plateauDeJeu.getJoueur(i).getPossedeCouronne()){
 				boolean continu=true;
 				do {
-					try {
-						int choix=generateur.nextInt(7)+1;
+					int choix=generateur.nextInt(7)+1;
+					if(choix==faceCachee||choix==faceVisible1||choix==faceVisible2) {
+					} else {
 						for (int j=0;j<copiePersos.size();j++) {
-							if(choix==copiePersos.get(j).getRang()) {
-								copiePersos.get(j).setJoueur(this.plateauDeJeu.getJoueur(i));
+							if(choix==copiePersos.get(j).getRang() && continu) {
+								for (int j2 = 0; j2 < this.plateauDeJeu.getNombrePersonnages(); j2++) {
+									if (copiePersos.get(j).getRang()==this.plateauDeJeu.getPersonnage(j2).getRang()) {
+										this.plateauDeJeu.getPersonnage(j2).setJoueur(this.plateauDeJeu.getJoueur(i));
+									}
+								}
 								copiePersos.remove(j);
 								System.out.println("Le joueur "+this.plateauDeJeu.getJoueur(i).getNom()+" a choisi son perso");
 								continu=false;
 							} 
 						}
-						if(continu) {
-							throw new Exception();
-						}
-					} catch (Exception e) {}
+					}
 				} while (continu);
 			}
 		}
 	}
 	private void percevoirRessources(int perso) {
-		if(this.plateauDeJeu.getPersonnage(perso).getJoueur().getNom()=="Player1") {
+		if(this.plateauDeJeu.getPersonnage(perso).getJoueur()!=null && this.plateauDeJeu.getPersonnage(perso).getJoueur().getNom()=="Player1") {
 			System.out.println("Ques souhaitez vous faire ?");
 			System.out.println("1 Prendre deux pièces d'or");
 			System.out.println("2 piocher deux quartier et en garder un");
@@ -365,7 +377,7 @@ public class Jeu {
 					this.plateauDeJeu.getPioche().ajouter(quartier1);
 				}
 			}
-		} else {
+		} else if(this.plateauDeJeu.getPersonnage(perso).getJoueur()!=null) {
 			int choix=generateur.nextInt(1);
 			if(choix==0) {
 				this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterPieces(2);

@@ -87,7 +87,8 @@ public class Magicienne extends Personnage{
 	public void utiliserPouvoirAvatar() {
 		Random rand=new Random();
 		//échanger ses cartes avec un autre joueur
-		int ask = rand.nextInt(2);
+		//int ask = rand.nextInt(2);
+		int ask=1;
 		System.out.println(ask);
 		if(this.getJoueur().nbQuartiersDansMain()==0) {
 			System.out.println("Le joueur "+this.getJoueur().getNom()+" ne possède pas de cartes à échanger.");
@@ -97,13 +98,13 @@ public class Magicienne extends Personnage{
 			int lecture=0;
 			do {
 				try {
-					lecture=rand.nextInt(this.getPlateau().getNombrePersonnages()-1);
+					lecture=rand.nextInt(this.getPlateau().getNombrePersonnages());
 					if(this.getPlateau().getJoueur(lecture).getPersonnage().getRang()==3) {
 						throw new Exception();
 					} else {
 						continu=false;
 					}
-				} catch(Exception e) {}
+				} catch(Exception e) {System.out.println("ca rentre ?");}
 			} while(continu);
 			ArrayList<Quartier> copieTableauMagicienne=new ArrayList<Quartier>(this.getJoueur().getMain());
 			ArrayList<Quartier> copieTableauJoueurChoix=new ArrayList<Quartier>(this.getPlateau().getJoueur(lecture).getMain());
