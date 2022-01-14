@@ -1,11 +1,11 @@
-package extentionReseau;
+package extention_Reseau;
 
 import java.net.*;
 import java.io.*;
 
 public class Thread_Client implements Runnable {
 	private int serveurPort = 12000;
-	private String serveurIp = "172.16.80.255";
+	private String serveurIp = "127.0.0.1";
 	private final String FINISH = "" + (char) 4;
 	private String id;
 	private BufferedReader Tampon_Lecture = null;
@@ -29,6 +29,8 @@ public class Thread_Client implements Runnable {
 		}
 		System.out.format("%s: Contact Reussi avec %s:%d\n", id, serveurIp,
 				serveurPort);
+		
+		
 		for (int i = 0; i < 10; i++) {
 			ma_sortie.format("%s: message %d\n", id, i);	
 			try {
@@ -37,6 +39,7 @@ public class Thread_Client implements Runnable {
 				e.printStackTrace();
 			} 
 		}
+		
 		
 		ma_sortie.format("%s\n",FINISH);
 		

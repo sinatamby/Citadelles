@@ -1,4 +1,4 @@
-package extentionReseau;
+package extention_Reseau;
 
 import java.net.*;
 import java.util.concurrent.TimeoutException;

@@ -1,4 +1,4 @@
-package extentionReseau;
+package extention_Reseau;
 
 public class Gen_Clients {
 
