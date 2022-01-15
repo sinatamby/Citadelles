@@ -8,47 +8,74 @@ public class Thread_Client implements Runnable {
 	private String serveurIp = "127.0.0.1";
 	private final String FINISH = "" + (char) 4;
 	private String id;
-	private BufferedReader Tampon_Lecture = null;
-	private PrintWriter ma_sortie = null;
+	private BufferedReader input = null;
+	private PrintWriter output = null;
+	private Socket la_connection= null;
 
 	public Thread_Client( String monId) {id=monId; } 
 	public Thread_Client(String hote, int port, String mon_id) {
 		this.serveurIp = hote;	
 		this.serveurPort = port;
 		this.id = mon_id;
-	}
-	public void run() {
+
 		Socket la_connection = null;
 		try {
 			la_connection = new Socket(serveurIp, serveurPort);
-			Tampon_Lecture = new BufferedReader(new InputStreamReader(
-					la_connection.getInputStream()));
-			ma_sortie = new PrintWriter(la_connection.getOutputStream(), true);
+			input = new BufferedReader(new InputStreamReader(la_connection.getInputStream()));
+			output = new PrintWriter(la_connection.getOutputStream(), true);
 		} catch (IOException e) {
-				System.out.println(e);System.exit(-1);
+			System.out.println(e);System.exit(-1);
 		}
 		System.out.format("%s: Contact Reussi avec %s:%d\n", id, serveurIp,
 				serveurPort);
-		
-		
-		for (int i = 0; i < 10; i++) {
-			ma_sortie.format("%s: message %d\n", id, i);	
+
+	}
+
+	public void run() {
+		boolean connecte=true;
+		while (connecte) {
 			try {
-				Thread.sleep( (int)( 3000*Math.random()));
-			} catch (InterruptedException e) {
+				System.out.println(this.read());
+			} catch (IOException e) {
 				e.printStackTrace();
-			} 
+			}
+
 		}
-		
-		
-		ma_sortie.format("%s\n",FINISH);
-		
+
+
+		output.format("%s\n",FINISH);
+
 		if (la_connection !=null)
 			try {
 				la_connection.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
-		}
+
 	}
+
+
+	public String read() throws IOException {
+		String message_lu = input.readLine();
+		return(message_lu);
+	}
+
+
+	public void sleep() {
+		boolean wake=false;
+
+		while (wake) {
+			try {
+				Thread.sleep( (int)( 3000*Math.random()));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	public void send(String message) {
+		System.out.println("Envoye message sur Serveur"+ id+ ": "+message);
+		this.output.format("[Client] : %s \n",message); 
+	}
+}
