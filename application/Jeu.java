@@ -151,6 +151,10 @@ public class Jeu {
 							try {
 								int choix=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
 								if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+									System.out.println("Coût trop élevé");
+									throw new Exception();
+								} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()) && !this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Carrière")) { 
+									System.out.println("Vous ne pouvez pas construire deux fois le même quartier.");
 									throw new Exception();
 								} else {
 									this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
@@ -182,7 +186,6 @@ public class Jeu {
 									continu=false;
 								}
 							} catch (Exception e) {
-								System.out.println("Coût trop élevé");
 								System.out.println("Votre choix :");
 							}
 						} while (continu);
@@ -199,6 +202,10 @@ public class Jeu {
 										try {
 											int choix=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
 											if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+												System.out.println("Coût trop élevé");
+												throw new Exception();
+											} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()) && !this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Carrière")) { 
+												System.out.println("Vous ne pouvez pas construire deux fois le même quartier.");
 												throw new Exception();
 											} else {
 												this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
@@ -226,7 +233,6 @@ public class Jeu {
 												continu=false;
 											}
 										} catch (Exception e) {
-											System.out.println("Coût trop élevé");
 											System.out.println("Votre choix :");
 										}
 									} while (continu);
@@ -275,6 +281,8 @@ public class Jeu {
 								int choix=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
 								if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
 									throw new Exception();
+								} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()) && !this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Carrière")) { 
+									throw new Exception();
 								} else {
 									this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
 									System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()+" dans sa cité.");
@@ -297,6 +305,8 @@ public class Jeu {
 										try {
 											int choix=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
 											if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+												throw new Exception();
+											} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()) && !this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Carrière")) { 
 												throw new Exception();
 											} else {
 												this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
