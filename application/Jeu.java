@@ -129,6 +129,17 @@ public class Jeu {
 							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
 						}
 					}
+					if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Laboratoire") && this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()>=1) {
+						System.out.println("Voulez-vous défausser une carte pour recevoir 2 pièces d'or ?");
+						if(Interaction.lireOuiOuNon()) {
+							for (int j = 0; j < this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain(); j++) {
+								System.out.println((j+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
+							}
+							int choix=Interaction.lireUnEntier(1,this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
+							this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix-1);
+							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
+						}
+					}
 					System.out.println("Voulez vous construire ?");
 					if(Interaction.lireOuiOuNon()) {
 						System.out.println("Quel quartier voulez vous construire ?");
@@ -206,13 +217,22 @@ public class Jeu {
 						System.out.println("Le personnage n'utilise pas son pouvoir");
 					}
 					if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Forge") && this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()>=2) {
-						System.out.println("Voulez-vous payer 2 pièces d'or pour piocher 3 cartes ?");
 						rand=generateur.nextInt(2);
 						if(rand==1) {
+							System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" utilise sa merveille Forge");
 							this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(2);
 							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
 							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
 							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
+						}
+						if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Laboratoire") && this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()>=1) {
+							rand=generateur.nextInt(2);
+							if(rand==1) {
+								System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" utilise sa merveille Laboratoire");
+								rand=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
+								this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(rand);
+								this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterPieces(2);
+							}
 						}
 					}
 					rand=generateur.nextInt(1);
