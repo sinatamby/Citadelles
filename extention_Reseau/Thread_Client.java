@@ -12,11 +12,8 @@ public class Thread_Client implements Runnable {
 	private PrintWriter output = null;
 	private Socket la_connection= null;
 
-	public Thread_Client( String monId) {id=monId; } 
-	public Thread_Client(String hote, int port, String mon_id) {
-		this.serveurIp = hote;	
-		this.serveurPort = port;
-		this.id = mon_id;
+	public Thread_Client(String monId) {
+		this.id = monId;
 
 		Socket la_connection = null;
 		try {
@@ -28,7 +25,6 @@ public class Thread_Client implements Runnable {
 		}
 		System.out.format("%s: Contact Reussi avec %s:%d\n", id, serveurIp,
 				serveurPort);
-
 	}
 
 	public void run() {

@@ -29,6 +29,7 @@ public class Serveur extends ServerSocket {
 			//myThreads.add(cThread);
 			client.send("cool sa marche");
 			client.send("sa marche vraiment bien");
+			System.out.println(client.read());
 
 
 
