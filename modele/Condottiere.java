@@ -11,8 +11,13 @@ public class Condottiere extends Personnage{
 	}
 	//méthodes
 	public void percevoirRessourcesSpecifiques() {
-		for(int i=0;i<this.getJoueur().nbQuartiersDansCite();i++) {
-			if(this.getJoueur().getQuartier(i).getType()=="MILITAIRE") {
+		if(this.joueur!=null && this.assassine==false) {
+			for(int i=0;i<this.getJoueur().nbQuartiersDansCite();i++) {
+				if(this.getJoueur().getQuartier(i).getType()=="MILITAIRE") {
+					this.getJoueur().ajouterPieces(1);
+				}
+			}
+			if (this.getJoueur().quartierPresentDansCite("École de Magie")) {
 				this.getJoueur().ajouterPieces(1);
 			}
 		}

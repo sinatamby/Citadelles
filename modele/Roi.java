@@ -18,15 +18,16 @@ public class Roi extends Personnage{
 	}
 	public void percevoirRessourcesSpecifiques() {
 		if(this.joueur!=null && this.assassine==false) {
-			int compte=0;
-			for(int i=0;i<getJoueur().nbQuartiersDansCite();i++) {
-				if(getJoueur().getQuartier(i).getType()=="NOBLE") {//getQuartier cible un Quartier dans le tableau Cite du Joueur
-					compte++;
+			for(int i=0;i<this.getJoueur().nbQuartiersDansCite();i++) {
+				if(this.getJoueur().getQuartier(i).getType()=="NOBLE") {
+					this.getJoueur().ajouterPieces(1);
 				}
 			}
-			this.joueur.ajouterPieces(compte);
-			System.out.println("Vous avez "+getJoueur().nbPieces()+" pieces dans votre trésor !");
+			if (this.getJoueur().quartierPresentDansCite("École de Magie")) {
+				this.getJoueur().ajouterPieces(1);
+			}
 		}
+		
 	}
 	public void utiliserPouvoirAvatar() {
 		if(this.joueur!=null && this.assassine==false) {

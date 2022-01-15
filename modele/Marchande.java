@@ -1,7 +1,5 @@
 package modele;
 
-import java.util.Random;
-
 public class Marchande extends Personnage{
 	//constructeur
 	public Marchande() {
@@ -12,8 +10,13 @@ public class Marchande extends Personnage{
 		this.getJoueur().ajouterPieces(1);
 	}
 	public void percevoirRessourcesSpecifiques() {
-		for(int i=0;i<this.getJoueur().nbQuartiersDansCite();i++) {
-			if(this.getJoueur().getQuartier(i).getType()=="COMMERCANT") {
+		if(this.joueur!=null && this.assassine==false) {
+			for(int i=0;i<this.getJoueur().nbQuartiersDansCite();i++) {
+				if(this.getJoueur().getQuartier(i).getType()=="COMMERCANT") {
+					this.getJoueur().ajouterPieces(1);
+				}
+			}
+			if (this.getJoueur().quartierPresentDansCite("École de Magie")) {
 				this.getJoueur().ajouterPieces(1);
 			}
 		}

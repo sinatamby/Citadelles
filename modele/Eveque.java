@@ -1,7 +1,5 @@
 package modele;
 
-import java.util.Random;
-
 public class Eveque extends Personnage{
 	//constructeur
 	public Eveque(){
@@ -11,8 +9,13 @@ public class Eveque extends Personnage{
 	public void utiliserPouvoir(){}
 	
 	public void percevoirRessourcesSpecifiques() {
-		for(int i=0;i<this.getJoueur().nbQuartiersDansCite();i++) {
-			if(this.getJoueur().getQuartier(i).getType()=="RELIGIEUX") {
+		if(this.joueur!=null && this.assassine==false) {
+			for(int i=0;i<this.getJoueur().nbQuartiersDansCite();i++) {
+				if(this.getJoueur().getQuartier(i).getType()=="RELIGIEUX") {
+					this.getJoueur().ajouterPieces(1);
+				}
+			}
+			if (this.getJoueur().quartierPresentDansCite("École de Magie")) {
 				this.getJoueur().ajouterPieces(1);
 			}
 		}
