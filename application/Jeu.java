@@ -157,6 +157,24 @@ public class Jeu {
 									System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom());
 									if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Manufacture") && this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getType()==Quartier.TYPE_QUARTIERS[4]) {
 										this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()-1);
+									} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()=="Tripot") {
+										System.out.println("Vous pouvez payer la carte Tripot avec des cartes quartier,");
+										System.out.println("Souhaitez vous le faire ?");
+										if (Interaction.lireOuiOuNon()) {
+											System.out.println("Combien de quartiers souhaitez vous défausser");
+											int nbDefausse=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()+1);
+											for (int k = 0; k < nbDefausse; k++) {
+												for(int j=0;j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain();j++) {
+													System.out.println((j+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
+												}
+												System.out.println("Choisissez le quartier :");
+												int defausse=Interaction.lireUnEntier(1,this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
+												this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(defausse-1);
+											}
+											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()-nbDefausse);
+										} else {
+											this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+										}
 									} else {
 										this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
 									}
@@ -187,6 +205,20 @@ public class Jeu {
 												System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom());
 												if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Manufacture") && this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getType()==Quartier.TYPE_QUARTIERS[4]) {
 													this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()-1);
+												} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()=="Tripot") {
+													int rand=generateur.nextInt(2);
+													if (rand==1) {
+														int nbDefausse=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()+1);
+														for (int j = 0; j < nbDefausse; j++) {
+															for(int j2=0;j2<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain();j2++) {
+																int defausse=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansMain()+1);
+																this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(defausse);
+															}
+														}
+														this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()-nbDefausse);
+													} else {
+														this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+													}
 												} else {
 													this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
 												}
