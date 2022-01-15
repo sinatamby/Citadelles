@@ -435,28 +435,53 @@ public class Jeu {
 			Quartier[] citeJoueur=this.plateauDeJeu.getJoueur(i).getCite();
 			for(int j=0;j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite();j++) {
 				totalCout=totalCout+citeJoueur[j].getCout();
-				for (int j2 = 0; j2 < 5; j2++) {
-					System.out.println((j2+1)+" "+Quartier.TYPE_QUARTIERS[j2]);
-				}
 				if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Cour des Miracles")) {
 					System.out.println("Vous possédez la Cour des Miracles, quel type voulez vous lui attribuer ?");
-					for (int j2 = 0; j2 < 5; j2++) {
-						System.out.println((j2+1)+" "+Quartier.TYPE_QUARTIERS[j2]);
+					if (this.plateauDeJeu.getJoueur(i).getNom()=="Player1") {
+						for (int j2 = 0; j2 < 5; j2++) {
+							System.out.println((j2+1)+" "+Quartier.TYPE_QUARTIERS[j2]);
+						}
+						int choix=Interaction.lireUnEntier(1, 6);
+						if 		 (choix==1) {
+							rel=true;
+						} else if(choix==2) {
+							mil=true;
+						} else if(choix==3) {
+							nob=true;
+						} else if(choix==4) {
+							com=true;
+						} else if(choix==5) {
+							mer=true;
+						}
+					} else {
+						int choix=generateur.nextInt(6);
+						if 		 (choix==1) {
+							rel=true;
+						} else if(choix==2) {
+							mil=true;
+						} else if(choix==3) {
+							nob=true;
+						} else if(choix==4) {
+							com=true;
+						} else if(choix==5) {
+							mer=true;
+						}
+					}
+				} else {
+					if 		 (citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[0]) {
+						rel=true;
+					} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[1]) {
+						mil=true;
+					} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[2]) {
+						nob=true;
+					} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[3]) {
+						com=true;
+					} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[4]) {
+						mer=true;
 					}
 				}
 				if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Dracoport")) {
 					totalCout=totalCout+2;
-				}
-				if 		 (citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[0]) {
-					rel=true;
-				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[1]) {
-					mil=true;
-				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[2]) {
-					nob=true;
-				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[3]) {
-					com=true;
-				} else if(citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[4]) {
-					mer=true;
 				}
 			}
 			if (rel&&mil&&nob&&com&&mer) {
