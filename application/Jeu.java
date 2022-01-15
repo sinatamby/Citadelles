@@ -120,6 +120,15 @@ public class Jeu {
 					if(Interaction.lireOuiOuNon()) {
 						this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
 					}
+					if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Forge") && this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()>=2) {
+						System.out.println("Voulez-vous payer 2 pièces d'or pour piocher 3 cartes ?");
+						if(Interaction.lireOuiOuNon()) {
+							this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(2);
+							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
+							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
+							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
+						}
+					}
 					System.out.println("Voulez vous construire ?");
 					if(Interaction.lireOuiOuNon()) {
 						System.out.println("Quel quartier voulez vous construire ?");
@@ -195,6 +204,16 @@ public class Jeu {
 						this.plateauDeJeu.getPersonnage(i).utiliserPouvoirAvatar();
 					} else {
 						System.out.println("Le personnage n'utilise pas son pouvoir");
+					}
+					if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Forge") && this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()>=2) {
+						System.out.println("Voulez-vous payer 2 pièces d'or pour piocher 3 cartes ?");
+						rand=generateur.nextInt(2);
+						if(rand==1) {
+							this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(2);
+							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
+							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
+							this.plateauDeJeu.getPersonnage(i).getJoueur().ajouterQuartierDansMain(this.plateauDeJeu.getPioche().piocher());
+						}
 					}
 					rand=generateur.nextInt(1);
 					if(rand==1) {
@@ -495,12 +514,21 @@ public class Jeu {
 						mer=true;
 					}
 				}
-				if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Dracoport")) {
-					totalPoints=totalPoints+2;
-				}
 				if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Fontaine aux Souhaits") && citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[4]) {
 					totalPoints++;
 				}
+			}
+			if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Dracoport")) {
+				totalPoints=totalPoints+2;
+			}
+			if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Salle des Cartes")) {
+				totalPoints=totalPoints+this.plateauDeJeu.getJoueur(i).nbQuartiersDansMain();
+			}
+			if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Statue Équestre") && this.plateauDeJeu.getJoueur(i).getPossedeCouronne()) {
+				totalPoints=totalPoints+5;
+			}
+			if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Trésor Impérial")) {
+				totalPoints=totalPoints+this.plateauDeJeu.getJoueur(i).nbPieces();
 			}
 			if (rel&&mil&&nob&&com&&mer) {
 				totalPoints=totalPoints+3;
