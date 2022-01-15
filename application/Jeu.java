@@ -463,7 +463,7 @@ public class Jeu {
 	}
 	private void percevoirRessources(int perso) {
 		if(this.plateauDeJeu.getPersonnage(perso).getJoueur()!=null && this.plateauDeJeu.getPersonnage(perso).getJoueur().getNom()=="Player1") {
-			System.out.println("Ques souhaitez vous faire ?");
+			System.out.println("Que souhaitez vous faire ?");
 			System.out.println("1 Prendre deux pièces d'or (vous en avez "+this.plateauDeJeu.getPersonnage(perso).getJoueur().nbPieces()+" dans votre trésor)");
 			System.out.println("2 piocher deux quartier et en garder un (vous en avez "+this.plateauDeJeu.getPersonnage(perso).getJoueur().nbQuartiersDansMain()+" dans votre main et "+this.plateauDeJeu.getPersonnage(perso).getJoueur().nbQuartiersDansCite()+" dans votre cité)");
 			int choix=Interaction.lireUnEntier(1, 3);
