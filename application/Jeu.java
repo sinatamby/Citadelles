@@ -135,7 +135,11 @@ public class Jeu {
 								} else {
 									this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
 									System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom());
-									this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+									if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Manufacture") && this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getType()==Quartier.TYPE_QUARTIERS[4]) {
+										this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()-1);
+									} else {
+										this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+									}
 									this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
 									continu=false;
 								}
@@ -161,7 +165,11 @@ public class Jeu {
 											} else {
 												this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
 												System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom());
-												this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+												if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Manufacture") && this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getType()==Quartier.TYPE_QUARTIERS[4]) {
+													this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()-1);
+												} else {
+													this.plateauDeJeu.getPersonnage(i).getJoueur().retirerPieces(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout());
+												}
 												this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().remove(choix);
 												continu=false;
 											}
@@ -429,11 +437,11 @@ public class Jeu {
 	private void calculDesPoints() {
 		System.out.println("Scores finaux :");
 		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
-			int totalCout=0;
+			int totalPoints=0;
 			boolean rel=false,mil=false,nob=false,com=false,mer=false;
 			Quartier[] citeJoueur=this.plateauDeJeu.getJoueur(i).getCite();
 			for(int j=0;j<this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite();j++) {
-				totalCout=totalCout+citeJoueur[j].getCout();
+				totalPoints=totalPoints+citeJoueur[j].getCout();
 				if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Cour des Miracles")) {
 					System.out.println("Vous possédez la Cour des Miracles, quel type voulez vous lui attribuer ?");
 					if (this.plateauDeJeu.getJoueur(i).getNom()=="Player1") {
@@ -480,18 +488,21 @@ public class Jeu {
 					}
 				}
 				if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Dracoport")) {
-					totalCout=totalCout+2;
+					totalPoints=totalPoints+2;
+				}
+				if (this.plateauDeJeu.getJoueur(i).quartierPresentDansCite("Fontaine aux Souhaits") && citeJoueur[j].getType()==Quartier.TYPE_QUARTIERS[4]) {
+					totalPoints++;
 				}
 			}
 			if (rel&&mil&&nob&&com&&mer) {
-				totalCout=totalCout+3;
+				totalPoints=totalPoints+3;
 			}
 			if (this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()>=7 && this.nomJoueurCiteCompletePremier==this.plateauDeJeu.getJoueur(i).getNom()) {
-				totalCout=totalCout+4;
+				totalPoints=totalPoints+4;
 			} else if(this.plateauDeJeu.getJoueur(i).nbQuartiersDansCite()>=7) {
-				totalCout=totalCout+2;
+				totalPoints=totalPoints+2;
 			}
-			System.out.println("Score du joueur "+this.plateauDeJeu.getJoueur(i).getNom()+" : "+totalCout+" pts");
+			System.out.println("Score du joueur "+this.plateauDeJeu.getJoueur(i).getNom()+" : "+totalPoints+" pts");
 		}
 	}
 }
