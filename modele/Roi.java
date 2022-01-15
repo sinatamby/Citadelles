@@ -25,7 +25,7 @@ public class Roi extends Personnage{
 				}
 			}
 			this.joueur.ajouterPieces(compte);
-			System.out.println("Vous avez "+compte+" pieces dans votre trésor !");
+			System.out.println("Vous avez "+getJoueur().nbPieces()+" pieces dans votre trésor !");
 		}
 	}
 	public void utiliserPouvoirAvatar() {
