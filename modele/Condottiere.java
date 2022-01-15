@@ -62,7 +62,7 @@ public class Condottiere extends Personnage{
 					System.out.print("Votre choix : ");
 				}
 			} while(continu);
-			if(joueur==0) {
+			if(joueur==0) { 
 				System.out.println("Vous ne faites rien.");
 			} else {
 				System.out.print(this.getPlateau().getJoueur(joueur-1).getNom()+": ");
@@ -81,6 +81,9 @@ public class Condottiere extends Personnage{
 							throw new Exception();
 						} else if(this.getPlateau().getJoueur(joueur-1).getQuartier(quartier-1).getCout()-1>this.getJoueur().nbPieces()) {
 							System.out.println("Votre trésor n'est pas suffisant");
+							throw new Exception();
+						} else if(this.getPlateau().getJoueur(joueur-1).getQuartier(quartier-1).getNom()=="Donjon") {
+							System.out.println("Ce quartier n'est pas affecté");
 							throw new Exception();
 						} else {
 							continu=false;
@@ -136,6 +139,8 @@ public class Condottiere extends Personnage{
 						if(quartier>this.getPlateau().getJoueur(joueur-1).nbQuartiersDansCite()) {
 							throw new Exception();
 						} else if(this.getPlateau().getJoueur(joueur-1).getQuartier(quartier-1).getCout()-1>this.getJoueur().nbPieces()) {
+							throw new Exception();
+						} else if(this.getPlateau().getJoueur(joueur-1).getQuartier(quartier-1).getNom()=="Donjon") {
 							throw new Exception();
 						} else {
 							continu=false;
