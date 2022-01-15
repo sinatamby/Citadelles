@@ -52,9 +52,8 @@ public class Jeu {
 			gestionCouronne();
 			reinitialisationPersonnages();
 			partieFinie();
-			calculDesPoints();
 		}
-		
+		calculDesPoints();
 	}
 	private void initialisation() {
 		this.plateauDeJeu=Configuration.configurationDeBase(Configuration.nouvellePioche());

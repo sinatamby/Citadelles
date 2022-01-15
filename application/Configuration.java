@@ -52,7 +52,7 @@ public class Configuration {
 		p.ajouter(new Quartier("Cour des Miracles",Quartier.TYPE_QUARTIERS[4],2,""));
 		p.ajouter(new Quartier("Donjon",Quartier.TYPE_QUARTIERS[4],3,""));
 		p.ajouter(new Quartier("Dracoport",Quartier.TYPE_QUARTIERS[4],6,""));
-		p.ajouter(new Quartier("École de magie",Quartier.TYPE_QUARTIERS[4],6,""));
+		p.ajouter(new Quartier("École de Magie",Quartier.TYPE_QUARTIERS[4],6,""));
 		p.ajouter(new Quartier("Fontaine aux Souhaits",Quartier.TYPE_QUARTIERS[4],5,""));
 		p.ajouter(new Quartier("Forge",Quartier.TYPE_QUARTIERS[4],5,""));
 		p.ajouter(new Quartier("Laboratoire",Quartier.TYPE_QUARTIERS[4],5,""));
