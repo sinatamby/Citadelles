@@ -366,18 +366,28 @@ public class Jeu {
 				this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterPieces(2);
 				System.out.println("Vous avez maintenant "+this.plateauDeJeu.getPersonnage(perso).getJoueur().nbPieces()+" pièces dans votre trésor.");
 			} else if(choix==2) {
-				Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
-				System.out.println("1 "+quartier1.getNom()+" ,type: "+quartier1.getType()+" ,coût:"+quartier1.getCout());
-				Quartier quartier2=this.plateauDeJeu.getPioche().piocher();
-				System.out.println("2 "+quartier2.getNom()+" ,type: "+quartier2.getType()+" ,coût:"+quartier2.getCout());
-				System.out.println("Lequel gardez vous ?");
-				int garder=Interaction.lireUnEntier(1, 3);
-				if(garder==1){
+				if (this.plateauDeJeu.getPersonnage(perso).getJoueur().quartierPresentDansCite("Bibliothèque")) {
+					System.out.println("Grace à la carte Bibliothèque, vous gardez les deux quartiers suivants :");
+					Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
+					System.out.println("1 "+quartier1.getNom()+" ,type: "+quartier1.getType()+" ,coût:"+quartier1.getCout());
 					this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier1);
-					this.plateauDeJeu.getPioche().ajouter(quartier2);
-				} else if(garder==2) {
+					Quartier quartier2=this.plateauDeJeu.getPioche().piocher();
+					System.out.println("2 "+quartier2.getNom()+" ,type: "+quartier2.getType()+" ,coût:"+quartier2.getCout());
 					this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier2);
-					this.plateauDeJeu.getPioche().ajouter(quartier1);
+				} else {
+					Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
+					System.out.println("1 "+quartier1.getNom()+" ,type: "+quartier1.getType()+" ,coût:"+quartier1.getCout());
+					Quartier quartier2=this.plateauDeJeu.getPioche().piocher();
+					System.out.println("2 "+quartier2.getNom()+" ,type: "+quartier2.getType()+" ,coût:"+quartier2.getCout());
+					System.out.println("Lequel gardez vous ?");
+					int garder=Interaction.lireUnEntier(1, 3);
+					if(garder==1){
+						this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier1);
+						this.plateauDeJeu.getPioche().ajouter(quartier2);
+					} else if(garder==2) {
+						this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier2);
+						this.plateauDeJeu.getPioche().ajouter(quartier1);
+					}
 				}
 			}
 		} else if(this.plateauDeJeu.getPersonnage(perso).getJoueur()!=null) {
@@ -389,14 +399,22 @@ public class Jeu {
 				System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(perso).getJoueur().getNom()+" prends 1 quartier.");
 				Quartier quartier1=this.plateauDeJeu.getPioche().piocher();
 				Quartier quartier2=this.plateauDeJeu.getPioche().piocher();
-				int garder=generateur.nextInt(1);
-				if(garder==0){
+				if (this.plateauDeJeu.getPersonnage(perso).getJoueur().quartierPresentDansCite("Bibliothèque")) {
 					this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier1);
 					this.plateauDeJeu.getPioche().ajouter(quartier2);
-				} else if(garder==1) {
 					this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier2);
 					this.plateauDeJeu.getPioche().ajouter(quartier1);
+				} else {
+					int garder=generateur.nextInt(1);
+					if(garder==0){
+						this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier1);
+						this.plateauDeJeu.getPioche().ajouter(quartier2);
+					} else if(garder==1) {
+						this.plateauDeJeu.getPersonnage(perso).getJoueur().ajouterQuartierDansMain(quartier2);
+						this.plateauDeJeu.getPioche().ajouter(quartier1);
+					}
 				}
+				
 			}
 		}
 	}
