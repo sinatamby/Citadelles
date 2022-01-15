@@ -27,11 +27,15 @@ public class Serveur extends ServerSocket {
 			ServiceClientI client = new ServiceClientI(maConnection, "T_" + c_port);
 			Thread cThread= new Thread(client);
 			//myThreads.add(cThread);
-			client.send("cool sa marche");
-			client.send("sa marche vraiment bien");
-			System.out.println(client.read());
-
-
+			
+			client.sleep();
+			Thread.sleep(2000);
+			client.wakeUp();
+			Thread.sleep(2000);
+			client.say("et la je dit des mot via la methode say");
+			Thread.sleep(2000);
+			String var =client.input("est ce que tu peu entrez une valeur pour le client");
+			System.out.println(var);
 
 		}
 		System.out.format("Closing all Connections\n"); //ferme les connection

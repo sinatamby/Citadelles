@@ -5,6 +5,8 @@ import java.util.Scanner;
 import java.util.concurrent.TimeoutException;
 import java.io.*;
 
+
+
 public class ServiceClientI  implements Runnable{ 
 	// FINISH string 
 	//   private static final  	String Finish=""+(char) 4;;
@@ -52,8 +54,6 @@ public class ServiceClientI  implements Runnable{
 	public  void run(){
 		String  message_lu = new String();
 		while (  true  ) {	
-
-
 			if(Thread.interrupted()){
 				System.out.format( "[%s] :Service interompu par le serveur, je m'arrete\n" ,id)  ;
 				terminer(); 
@@ -77,7 +77,7 @@ public class ServiceClientI  implements Runnable{
 
 	public void send(String message) {
 		System.out.println("Envoye message sur client"+ id+ ": "+message);
-		this.output.format("[serveur] : %s \n",message);
+		this.output.format("%s \n",message);
 	}
 
 	
@@ -85,6 +85,32 @@ public class ServiceClientI  implements Runnable{
 		String message_lu = input.readLine();
 		return(message_lu);
 	}
+
+	public void sleep() {
+		this.send("SLEEP");
+	}
+	
+	public void wakeUp() {
+		this.send("WAKEUP");
+	}
+	
+	public void say(String message) {
+		this.send("SAY:"+message);
+	}
+	
+	public String input(String ask) {
+		this.send("INPUT:"+ask);
+		System.out.println("marqueur");
+		String tmp = null;
+		try {
+			tmp = this.read();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("valeur retournée " + tmp);
+		return tmp;
+	}
+	
 
 
 }

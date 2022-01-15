@@ -1,6 +1,7 @@
 package extention_Reseau;
 
 import java.net.*;
+import java.util.Scanner;
 import java.io.*;
 
 public class Thread_Client implements Runnable {
@@ -11,6 +12,7 @@ public class Thread_Client implements Runnable {
 	private BufferedReader input = null;
 	private PrintWriter output = null;
 	private Socket la_connection= null;
+	Scanner scanner = new Scanner(System.in);
 
 	public Thread_Client(String monId) {
 		this.id = monId;
@@ -30,11 +32,12 @@ public class Thread_Client implements Runnable {
 	public void run() {
 		boolean connecte=true;
 		while (connecte) {
-			try {
-				System.out.println(this.read());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			//try {
+				//System.out.println(this.read());
+				this.parse();
+			//} catch (IOException e) {
+				//e.printStackTrace();
+			//}
 
 		}
 
@@ -56,22 +59,65 @@ public class Thread_Client implements Runnable {
 		return(message_lu);
 	}
 
-
-	public void sleep() {
-		boolean wake=false;
-
-		while (wake) {
-			try {
-				Thread.sleep( (int)( 3000*Math.random()));
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+	public void send(String message) {
+		System.out.println("SEND2SERVER : " +message);
+		this.output.format(message); 
+	}
+	public void parse() {
+		String[] cmd = null;
+		String message = null;
+		try {
+			message=this.read();
+			cmd = message.split(":",0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("COMMANDE  ==> -"+cmd[0]+"-");
+		switch (cmd[0]) {
+		case "SLEEP ":
+			System.out.println("okok");
+			this.sleep();
+			break;
+		case "SAY":
+			this.say(cmd[1]);
+			break;
+			
+		case "INPUT":
+			this.input(cmd[1]);
+			break;
+		default:
+			break;
 		}
 
 	}
 
-	public void send(String message) {
-		System.out.println("Envoye message sur Serveur"+ id+ ": "+message);
-		this.output.format("[Client] : %s \n",message); 
+
+
+public void sleep() {
+	System.out.println("-dors-");
+	boolean dors=true;
+	while (dors) {
+		try {
+			String cmd = this.read();
+			if (cmd.equals("WAKEUP ")){
+				dors=false;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+	System.out.println("-reveille-");
+}
+private void input(String message) {
+	System.out.print("[server] :"+message);
+	String line = scanner.nextLine();
+	this.send(line);
+}
+
+private void say(String message) {
+	System.out.println("[server] :"+message);
+}
+
+
+
 }
