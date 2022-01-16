@@ -70,14 +70,17 @@ public class Jeu {
 		this.plateauDeJeu.getJoueur(joueur).setPossedeCouronne(true);
 	}
 	private void gestionCouronne() {
+		boolean couronne=false;
 		for(int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
 			if (this.plateauDeJeu.getJoueur(i).getPersonnage().getCaracteristiques()==Caracteristiques.ROI) {
 				this.plateauDeJeu.getJoueur(i).setPossedeCouronne(true);
-			} else {
-				for(int j=0;j<this.plateauDeJeu.getNombreJoueurs();j++) {
-					if (this.plateauDeJeu.getJoueur(j).getPossedeCouronne()) {
-						this.plateauDeJeu.getJoueur(j).setPossedeCouronne(true);
-					}
+				couronne=true;
+			}
+		}
+		if(!couronne) {
+			for(int j=0;j<this.plateauDeJeu.getNombreJoueurs();j++) {
+				if (this.plateauDeJeu.getJoueur(j).getPossedeCouronne()) {
+					this.plateauDeJeu.getJoueur(j).setPossedeCouronne(true);
 				}
 			}
 		}
@@ -116,10 +119,8 @@ public class Jeu {
 				if(this.plateauDeJeu.getPersonnage(i).getJoueur()!=null && this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()=="Player1") {
 					percevoirRessources(i);
 					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
-					System.out.println("Voulez vous utiliser votre pouvoir ?");
-					if(Interaction.lireOuiOuNon()) {
-						this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
-					}
+					System.out.println("Utilisation du pouvoir de votre personnage :");
+					this.plateauDeJeu.getPersonnage(i).utiliserPouvoir();
 					if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Forge") && this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()>=2) {
 						System.out.println("Voulez-vous payer 2 pièces d'or pour piocher 3 cartes ?");
 						if(Interaction.lireOuiOuNon()) {
@@ -247,13 +248,9 @@ public class Jeu {
 				} else if(this.plateauDeJeu.getPersonnage(i).getJoueur()!=null) {
 					percevoirRessources(i);
 					this.plateauDeJeu.getPersonnage(i).percevoirRessourcesSpecifiques();
-					int rand=generateur.nextInt(2);
-					if(rand==1) {
-						System.out.println("Le personnage utilise son pouvoir");
-						this.plateauDeJeu.getPersonnage(i).utiliserPouvoirAvatar();
-					} else {
-						System.out.println("Le personnage n'utilise pas son pouvoir");
-					}
+					System.out.println("Le personnage utilise son pouvoir");
+					this.plateauDeJeu.getPersonnage(i).utiliserPouvoirAvatar();
+					int rand=0;
 					if (this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Forge") && this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()>=2) {
 						rand=generateur.nextInt(2);
 						if(rand==1) {

@@ -38,7 +38,7 @@ public class Assassin extends Personnage{
 	public void utiliserPouvoirAvatar() {
 		Random rand=new Random();
 		int choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
-		while (this.getPlateau().getPersonnage(choixAlea).getRang()==1) {
+		while (this.getPlateau().getPersonnage(choixAlea).getRang()==1 || this.getPlateau().getPersonnage(choixAlea).getJoueur()==null) {
 			choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
 		}
 		this.getPlateau().getPersonnage(choixAlea).setAssassine();

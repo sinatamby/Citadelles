@@ -30,12 +30,12 @@ public class Magicienne extends Personnage{
 				try {
 					lecture=Interaction.lireUnEntier(1,this.getPlateau().getNombrePersonnages()+1);
 					if(this.getPlateau().getJoueur(lecture-1).getPersonnage().getRang()==3) {
+						System.out.println("Vous ne pouvez pas vous choisir");
 						throw new Exception();
 					} else {
 						continu=false;
 					}
 				} catch(Exception e) {
-					System.out.println("Vous ne pouvez pas vous choisir");
 					System.out.print("Votre choix : ");
 				}
 			} while(continu);
@@ -104,7 +104,7 @@ public class Magicienne extends Personnage{
 					} else {
 						continu=false;
 					}
-				} catch(Exception e) {System.out.println("ca rentre ?");}
+				} catch(Exception e) {}
 			} while(continu);
 			ArrayList<Quartier> copieTableauMagicienne=new ArrayList<Quartier>(this.getJoueur().getMain());
 			ArrayList<Quartier> copieTableauJoueurChoix=new ArrayList<Quartier>(this.getPlateau().getJoueur(lecture).getMain());

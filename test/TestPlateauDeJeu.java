@@ -42,9 +42,6 @@ public class TestPlateauDeJeu {
 		Test.test(plateau.getNombrePersonnages()== 1,"nombre de joueurs");
 		Test.test(plateau.getPersonnage(0)== roi,
 				"récupération du personnage depuis le tableau");
-		plateau.retirerPersonnage(roi);
-		Test.test(plateau.getNombrePersonnages()==0,"nombre de joueurs");
-		Test.test(plateau.getPersonnage(0)==null, "vérification de la retraite du roi");
 	}
 	public void test4() {
 		System.out.println("TEST DE L'ASSOCIATION DU PLATEAU AU PERSONNAGE");
