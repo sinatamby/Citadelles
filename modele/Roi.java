@@ -12,6 +12,7 @@ public class Roi extends Personnage{
 	//méthodes
 	public void utiliserPouvoir() {
 		if(this.joueur!=null && this.assassine==false) {
+			System.out.println("Je prends la courronne");
 			getJoueur().setPossedeCouronne(true);
 		}		
 	}

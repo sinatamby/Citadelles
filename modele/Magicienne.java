@@ -20,8 +20,8 @@ public class Magicienne extends Personnage{
 			System.out.println("Avec quel personnage voulez-vous échanger vos cartes ?");
 			int i=1;
 			while(i<=this.getPlateau().getNombrePersonnages()) {
-				if(this.getPlateau().getPersonnage(i-1).getJoueur()!=null) {
-					System.out.println(i+" "+this.getPlateau().getPersonnage(i-1).getNom()+" "+this.getPlateau().getPersonnage(i-1).getJoueur().nbQuartiersDansMain());
+				if(this.getPlateau().getPersonnage(i).getJoueur()!=null) {
+					System.out.println(i+" "+this.getPlateau().getPersonnage(i-1).getNom()+" "+this.getPlateau().getJoueur(i-1).nbQuartiersDansMain());
 				}
 				i++;
 			}
