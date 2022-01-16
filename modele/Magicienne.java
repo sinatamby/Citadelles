@@ -12,7 +12,6 @@ public class Magicienne extends Personnage{
 	}
 	//méthode
 	public void utiliserPouvoir() {
-		System.out.println(this.getPlateau().getPioche().nombreElements());
 		System.out.println("Voulez-vous échanger vos cartes avec celles d'un autre joueur ?(o/n)");
 		boolean ask = Interaction.lireOuiOuNon();
 		if(this.getJoueur().nbQuartiersDansMain()==0) {
@@ -21,7 +20,9 @@ public class Magicienne extends Personnage{
 			System.out.println("Avec quel personnage voulez-vous échanger vos cartes ?");
 			int i=1;
 			while(i<=this.getPlateau().getNombrePersonnages()) {
-				System.out.println(i+" "+this.getPlateau().getPersonnage(i-1).getNom()+" "+this.getPlateau().getJoueur(i-1).nbQuartiersDansMain());
+				if(this.getPlateau().getPersonnage(i).getJoueur()!=null) {
+					System.out.println(i+" "+this.getPlateau().getPersonnage(i-1).getNom()+" "+this.getPlateau().getJoueur(i-1).nbQuartiersDansMain());
+				}
 				i++;
 			}
 			boolean continu=true;
@@ -89,7 +90,6 @@ public class Magicienne extends Personnage{
 		//échanger ses cartes avec un autre joueur
 		//int ask = rand.nextInt(2);
 		int ask=1;
-		System.out.println(ask);
 		if(this.getJoueur().nbQuartiersDansMain()==0) {
 			System.out.println("Le joueur "+this.getJoueur().getNom()+" ne possède pas de cartes à échanger.");
 		} else if(ask==1) {

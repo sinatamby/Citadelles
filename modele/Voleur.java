@@ -42,7 +42,7 @@ public class Voleur extends Personnage{
 			choixAlea=rand.nextInt(this.getPlateau().getNombrePersonnages());
 		}
 		this.getPlateau().getPersonnage(choixAlea).setVole();
-		this.getJoueur().ajouterPieces(this.getPlateau().getJoueur(choixAlea).nbPieces());
+		this.getJoueur().ajouterPieces(this.getPlateau().getPersonnage(choixAlea).getJoueur().nbPieces());
 		this.getPlateau().getJoueur(choixAlea).retirerPieces(this.getPlateau().getJoueur(choixAlea).nbPieces());
 		System.out.println("Le personnage numéro "+(choixAlea+1)+" ("+this.getPlateau().getPersonnage(choixAlea).getNom()+") a été volé.");
 	}
