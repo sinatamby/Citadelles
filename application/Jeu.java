@@ -349,10 +349,16 @@ public class Jeu {
 		int faceCachee=copiePersos.get(remove).getRang();
 		copiePersos.remove(remove);
 		remove=generateur.nextInt(copiePersos.size());
+		while(copiePersos.get(remove).getNom()=="Roi") {
+			remove=generateur.nextInt(copiePersos.size());
+		}
 		System.out.println("Le personnage \""+copiePersos.get(remove).getNom()+"\" est écarté face visible.");
 		int faceVisible1=copiePersos.get(remove).getRang();
 		copiePersos.remove(remove);
 		remove=generateur.nextInt(copiePersos.size());
+		while(copiePersos.get(remove).getNom()=="Roi") {
+			remove=generateur.nextInt(copiePersos.size());
+		}
 		System.out.println("Le personnage \""+copiePersos.get(remove).getNom()+"\" est écarté face visible.");
 		int faceVisible2=copiePersos.get(remove).getRang();
 		copiePersos.remove(remove);
@@ -409,7 +415,6 @@ public class Jeu {
 				
 			}
 		}
-		System.out.println("phase couronne complete");
 		//les joueurs restants
 		for (int i=0;i<this.plateauDeJeu.getNombreJoueurs();i++) {
 			if(i==0 && !this.plateauDeJeu.getJoueur(i).getPossedeCouronne()) {
@@ -459,7 +464,6 @@ public class Jeu {
 				} while (continu);
 			}
 		}
-		System.out.println("phase autre joueurs complete");
 	}
 	private void percevoirRessources(int perso) {
 		if(this.plateauDeJeu.getPersonnage(perso).getJoueur()!=null && this.plateauDeJeu.getPersonnage(perso).getJoueur().getNom()=="Player1") {
