@@ -91,7 +91,6 @@ public abstract class Personnage{
 		this.assassine=false;
 		this.vole=false;
 		if(this.joueur!=null) {
-			System.out.println("reset perso");
 			this.joueur.monPersonnage=null;
 		}
 	}
