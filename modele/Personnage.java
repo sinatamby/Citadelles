@@ -93,6 +93,7 @@ public abstract class Personnage{
 		if(this.joueur!=null) {
 			System.out.println("reset perso");
 			this.joueur.monPersonnage=null;
+			this.joueur=null;
 		}
 	}
 }

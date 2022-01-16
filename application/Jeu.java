@@ -77,7 +77,13 @@ public class Jeu {
 				couronnePresente=true;
 			}
 		}
-		if(!couronnePresente) {
+		if(couronnePresente) {
+			for(int j=0;j<this.plateauDeJeu.getNombreJoueurs();j++) {
+				if (this.plateauDeJeu.getJoueur(j).getPossedeCouronne() && this.plateauDeJeu.getJoueur(j).getPersonnage().getCaracteristiques()!=Caracteristiques.ROI) {
+					this.plateauDeJeu.getJoueur(j).setPossedeCouronne(false);
+				}
+			}
+		} else if(!couronnePresente){
 			for(int j=0;j<this.plateauDeJeu.getNombreJoueurs();j++) {
 				if (this.plateauDeJeu.getJoueur(j).getPossedeCouronne()) {
 					this.plateauDeJeu.getJoueur(j).setPossedeCouronne(true);
@@ -152,13 +158,15 @@ public class Jeu {
 						boolean continu=true;
 						do {
 							try {
-								int choix=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
+								int choix=Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
 								if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix-1).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
 									System.out.println("Coût trop élevé");
 									throw new Exception();
 								} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix-1).getNom()) && !this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Carrière")) { 
 									System.out.println("Vous ne pouvez pas construire deux fois le même quartier.");
 									throw new Exception();
+								} else if(choix==0){
+									continu=false;
 								} else {
 									this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix-1));
 									System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix-1).getNom());
@@ -196,20 +204,22 @@ public class Jeu {
 							for(int k=2;k<4;k++) {
 								System.out.println("Voulez vous construire un "+(k)+"eme quartier ?");
 								if (Interaction.lireOuiOuNon()) {
-									System.out.println("Quel quartier voulez vous construire ?");
+									System.out.println("Quel quartier voulez vous construire ? (0 pour ne rien faire)");
 									for(int j=0;j<this.plateauDeJeu.getPersonnage(i).getJoueur().nbQuartiersDansCite();j++) {
-										System.out.println((i+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
+										System.out.println((j+1)+" "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getNom()+" (coût:"+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(j).getCout()+")");
 									}
 									continu=true;
 									do {
 										try {
-											int choix=Interaction.lireUnEntier(1, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
+											int choix=Interaction.lireUnEntier(0, this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
 											if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix-1).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
 												System.out.println("Coût trop élevé");
 												throw new Exception();
 											} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix-1).getNom()) && !this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Carrière")) { 
 												System.out.println("Vous ne pouvez pas construire deux fois le même quartier.");
 												throw new Exception();
+											} else if(choix==0){
+												continu=false;
 											} else {
 												this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix-1));
 												System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix-1).getNom());
@@ -272,16 +282,22 @@ public class Jeu {
 							}
 						}
 					}
-					rand=generateur.nextInt(1);
+					rand=generateur.nextInt(2);
 					if(rand==1) {
 						boolean continu=true;
 						do {
 							try {
-								int choix=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
+								int choix=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+2);
+								int securite=0;
+								System.out.println(choix);
 								if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+									securite++;
 									throw new Exception();
 								} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()) && !this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Carrière")) { 
+									securite++;
 									throw new Exception();
+								} else if(securite>30){
+									continu=false;
 								} else {
 									this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
 									System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()+" dans sa cité.");
@@ -297,16 +313,21 @@ public class Jeu {
 						} while (continu);
 						if(this.plateauDeJeu.getPersonnage(i).getCaracteristiques()==Caracteristiques.ARCHITECTE) {
 							for(int k=1;k<3;k++) {
-								rand=generateur.nextInt(1);
+								rand=generateur.nextInt(2);
 								if (rand==1) {
 									continu=true;
 									do {
 										try {
-											int choix=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+1);
+											int choix=generateur.nextInt(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().size()+2);
+											int securite=0;
 											if(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getCout()>this.plateauDeJeu.getPersonnage(i).getJoueur().nbPieces()) {
+												securite++;
 												throw new Exception();
 											} else if(this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom()) && !this.plateauDeJeu.getPersonnage(i).getJoueur().quartierPresentDansCite("Carrière")) { 
+												securite++;
 												throw new Exception();
+											} else if(securite>20){
+												continu=false;
 											} else {
 												this.plateauDeJeu.getPersonnage(i).construire(this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix));
 												System.out.println("Le joueur "+this.plateauDeJeu.getPersonnage(i).getJoueur().getNom()+" construit le quartier "+this.plateauDeJeu.getPersonnage(i).getJoueur().getMain().get(choix).getNom());
