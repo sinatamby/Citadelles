@@ -6,7 +6,7 @@ import java.io.*;
 
 public class Thread_Client implements Runnable {
 	private int serveurPort = 12000;
-	private String serveurIp = "127.0.0.1";
+	private String serveurIp = "127.0.0.1";//local
 	private final String FINISH = "" + (char) 4;
 	private String id;
 	private BufferedReader input = null;
@@ -14,7 +14,7 @@ public class Thread_Client implements Runnable {
 	private Socket la_connection= null;
 	Scanner scanner = new Scanner(System.in);
 
-	public Thread_Client(String monId) {
+	public Thread_Client(String monId) {//init la connexion avec le serveur
 		this.id = monId;
 
 		Socket la_connection = null;
@@ -29,7 +29,7 @@ public class Thread_Client implements Runnable {
 				serveurPort);
 	}
 
-	public void run() {
+	public void run() {//methode principal
 		boolean connecte=true;
 		while (connecte) {
 			//try {
@@ -42,7 +42,7 @@ public class Thread_Client implements Runnable {
 		}
 
 
-		output.format("%s\n",FINISH);
+		output.format("%s\n",FINISH);//envoyer au serveur le signal de terminé la connexion
 
 		if (la_connection !=null)
 			try {
@@ -54,21 +54,21 @@ public class Thread_Client implements Runnable {
 	}
 
 
-	public String read() throws IOException {
+	public String read() throws IOException {//lis les messages du serveur
 		String message_lu = input.readLine();
 		return(message_lu);
 	}
 
-	public void send(String message) {
+	public void send(String message) {//envoyer un message au serveur
 		System.out.println("SEND2SERVER : " +message);
 		this.output.format(message); 
 	}
-	public void parse() {
+	public void parse() {//determine quelle commande le serveur nous envoye
 		String[] cmd = null;
 		String message = null;
 		try {
 			message=this.read();
-			cmd = message.split(":",0);
+			cmd = message.split(":",0);//separé le message
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -93,7 +93,7 @@ public class Thread_Client implements Runnable {
 
 
 
-public void sleep() {
+public void sleep() {//passe en veille et attend le message de reveille
 	System.out.println("-dors-");
 	boolean dors=true;
 	while (dors) {
@@ -108,13 +108,13 @@ public void sleep() {
 	}
 	System.out.println("-reveille-");
 }
-private void input(String message) {
+private void input(String message) {//affiche le message du serveur et envoye la valeur saisi par l'utilisateur
 	System.out.print("[server] :"+message);
 	String line = scanner.nextLine();
 	this.send(line);
 }
 
-private void say(String message) {
+private void say(String message) {//affiche simplement le message du serveur
 	System.out.println("[server] :"+message);
 }
 
