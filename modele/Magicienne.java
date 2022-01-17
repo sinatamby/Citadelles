@@ -85,6 +85,7 @@ public class Magicienne extends Personnage{
 			}	
 		}
 	}
+	
 	public void utiliserPouvoirAvatar() {
 		Random rand=new Random();
 		//échanger ses cartes avec un autre joueur
