@@ -41,7 +41,7 @@ public class Magicienne extends Personnage{
 				}
 			} while(continu);
 			ArrayList<Quartier> copieTableauMagicienne=new ArrayList<Quartier>(this.getJoueur().getMain());
-			ArrayList<Quartier> copieTableauJoueurChoix=new ArrayList<Quartier>(this.getPlateau().getJoueur(lecture-1).getMain());
+			ArrayList<Quartier> copieTableauJoueurChoix=new ArrayList<Quartier>(this.getPlateau().getPersonnage(lecture-1).getJoueur().getMain());
 			this.getJoueur().getMain().clear();
 			this.getPlateau().getJoueur(lecture-1).getMain().clear();
 			this.getJoueur().getMain().addAll(copieTableauJoueurChoix);
@@ -107,7 +107,7 @@ public class Magicienne extends Personnage{
 				} catch(Exception e) {}
 			} while(continu);
 			ArrayList<Quartier> copieTableauMagicienne=new ArrayList<Quartier>(this.getJoueur().getMain());
-			ArrayList<Quartier> copieTableauJoueurChoix=new ArrayList<Quartier>(this.getPlateau().getJoueur(lecture).getMain());
+			ArrayList<Quartier> copieTableauJoueurChoix=new ArrayList<Quartier>(this.getPlateau().getPersonnage(lecture).getJoueur().getMain());
 			this.getJoueur().getMain().clear();
 			this.getPlateau().getJoueur(lecture).getMain().clear();
 			this.getJoueur().getMain().addAll(copieTableauJoueurChoix);
