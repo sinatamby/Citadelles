@@ -30,7 +30,7 @@ public class Magicienne extends Personnage{
 			do {
 				try {
 					lecture=Interaction.lireUnEntier(1,this.getPlateau().getNombrePersonnages()+1);
-					if(this.getPlateau().getJoueur(lecture-1).getPersonnage().getRang()==3) {
+					if(this.getPlateau().getPersonnage(lecture-1).getRang()==3) {
 						System.out.println("Vous ne pouvez pas vous choisir");
 						throw new Exception();
 					} else {
@@ -99,7 +99,7 @@ public class Magicienne extends Personnage{
 			do {
 				try {
 					lecture=rand.nextInt(this.getPlateau().getNombrePersonnages());
-					if(this.getPlateau().getJoueur(lecture).getPersonnage().getRang()==3) {
+					if(this.getPlateau().getPersonnage(lecture).getRang()==3) {
 						throw new Exception();
 					} else {
 						continu=false;
